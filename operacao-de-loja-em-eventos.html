@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operação de Loja em Eventos — Grupo T&M</title>
+<meta name="description" content="Gestão completa de varejo para grandes eventos. O Grupo T&M assume desde a criação dos produtos até o fechamento do caixa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blue:        #0047BB;
+  --blue-dark:   #001E60;
+  --blue-hover:  #0052D4;
+  --blue-subtle: #EEF3FC;
+  --blue-mid:    rgba(0,71,187,0.12);
+  --white:       #FFFFFF;
+  --bg:          #F9FAFB;
+  --bg-alt:      #F3F5F9;
+  --border:      #E5E9F2;
+  --border-dark: #D1D8E8;
+  --black:       #0C0E14;
+  --ink:         #1A1D27;
+  --body:        #4A5068;
+  --muted:       #8891A8;
+  --red-subtle:  #FEF2F2;
+  --red:         #DC2626;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 64px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 40px;
+  gap: 32px;
+}
+
+.nav-logo {
+  font-family: 'DM Sans', sans-serif; font-weight: 700;
+  font-size: 18px; letter-spacing: -0.03em; color: var(--ink);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-logo-dot { 
+  width: 7px; height: 7px; border-radius: 50%; 
+  background: var(--blue); display: inline-block; 
+}
+
+.nav-spacer { flex: 1; }
+
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  font-size: 14px; font-weight: 500; color: var(--body);
+  text-decoration: none; transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  background: var(--blue); color: var(--white);
+  padding: 9px 20px; border-radius: 7px;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: background 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--blue-hover); box-shadow: 0 4px 16px rgba(0,71,187,0.3); }
+
+/* ─── HERO ─── */
+.hero {
+  padding-top: 64px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 80px 40px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: end;
+}
+
+.hero-left { padding-bottom: 72px; }
+
+.hero-breadcrumb {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--blue);
+  margin-bottom: 28px;
+}
+.hero-breadcrumb-sep { color: var(--border-dark); }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 4.5vw, 62px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.hero-sub {
+  font-size: 17px; line-height: 1.7;
+  color: var(--body); font-weight: 300;
+  max-width: 460px;
+  margin-bottom: 36px;
+}
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+
+.btn-primary {
+  background: var(--blue); color: var(--white);
+  padding: 13px 28px; border-radius: 8px;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;
+}
+.btn-primary:hover { background: var(--blue-hover); box-shadow: 0 8px 24px rgba(0,71,187,0.3); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--white); color: var(--ink);
+  padding: 13px 28px; border-radius: 8px;
+  font-size: 14px; font-weight: 500;
+  text-decoration: none; transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1.5px solid var(--border-dark);
+}
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-subtle); }
+
+.hero-trust {
+  display: flex; align-items: center; gap: 16px;
+  padding-top: 24px; border-top: 1px solid var(--border);
+}
+.hero-trust-label { font-size: 12px; color: var(--muted); font-weight: 400; white-space: nowrap; }
+.hero-trust-logos { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.trust-logo {
+  font-size: 13px; font-weight: 700; color: var(--muted);
+  letter-spacing: -0.01em; transition: color 0.2s;
+}
+.trust-logo:hover { color: var(--ink); }
+
+/* Hero right — visual panel */
+.hero-right {
+  position: relative;
+  align-self: stretch;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+
+.hero-visual-panel {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  padding: 28px;
+  height: 100%;
+  min-height: 440px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle grid pattern */
+.hero-visual-panel::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.5;
+}
+
+.hvp-inner { position: relative; z-index: 1; }
+
+.hvp-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 100px; padding: 5px 12px;
+  font-size: 11px; font-weight: 600; color: var(--body);
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.hvp-live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e; animation: live 1.5s ease-in-out infinite;
+}
+@keyframes live { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* Stat cards inside hero panel */
+.hvp-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+
+.hvp-stat {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.hvp-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--ink); line-height: 1;
+}
+.hvp-stat-num span { color: var(--blue); }
+.hvp-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 400; }
+
+/* Timeline mini */
+.hvp-timeline {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.hvp-tl-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+
+.hvp-tl-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  margin-bottom: 10px;
+}
+.hvp-tl-item:last-child { margin-bottom: 0; }
+
+.hvp-tl-dot-wrap {
+  display: flex; flex-direction: column; align-items: center; flex-shrink: 0; padding-top: 3px;
+}
+.hvp-tl-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border-dark); flex-shrink: 0;
+}
+.hvp-tl-dot.done { background: var(--blue); }
+.hvp-tl-dot.active { background: var(--blue); box-shadow: 0 0 0 3px rgba(0,71,187,0.2); }
+.hvp-tl-line { width: 1px; height: 16px; background: var(--border); margin-top: 2px; }
+
+.hvp-tl-content { }
+.hvp-tl-phase { font-size: 11px; font-weight: 600; color: var(--ink); }
+.hvp-tl-phase span {
+  display: inline-block; margin-left: 6px;
+  font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px;
+  background: var(--blue-subtle); color: var(--blue);
+}
+.hvp-tl-phase span.done { background: #F0FDF4; color: #15803d; }
+.hvp-tl-phase span.active { background: #EFF6FF; color: #2563EB; }
+.hvp-tl-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+/* ─── LOGOS BAR ─── */
+.logos-bar {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 40px;
+  display: flex; align-items: center; gap: 40px;
+  max-width: 1200px; margin: 0 auto;
+}
+.logos-bar-label { font-size: 12px; color: var(--muted); white-space: nowrap; font-weight: 400; }
+.logos-bar-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+.logos-bar-items { display: flex; gap: 36px; align-items: center; flex-wrap: wrap; }
+.logos-bar-client { font-size: 14px; font-weight: 700; color: var(--border-dark); letter-spacing: -0.01em; transition: color 0.2s; cursor: default; }
+.logos-bar-client:hover { color: var(--ink); }
+
+/* ─── SECTION PATTERN ─── */
+section { padding: 88px 40px; }
+.container { max-width: 1200px; margin: 0 auto; }
+
+.section-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+.section-tag::before { content: ''; width: 20px; height: 1.5px; background: var(--blue); }
+
+h2.headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 16px;
+}
+h2.headline em { font-style: italic; color: var(--blue); }
+h2.headline.white { color: var(--white); }
+h2.headline.white em { color: #90b4f0; }
+
+.lead {
+  font-size: 17px; line-height: 1.7; color: var(--body);
+  font-weight: 300; max-width: 540px;
+}
+.lead.white { color: rgba(255,255,255,0.6); }
+
+/* ─── PROBLEM ─── */
+.problem-section { background: var(--white); }
+
+.problem-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+
+.problem-cards { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
+
+.problem-card {
+  display: flex; gap: 16px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  transition: all 0.2s;
+  cursor: default;
+}
+.problem-card:first-child { border-top: 1px solid var(--border); }
+.problem-card:hover { padding-left: 12px; }
+
+.pc-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--red-subtle);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0; margin-top: 2px;
+  transition: transform 0.2s;
+}
+.problem-card:hover .pc-icon { transform: scale(1.08); }
+
+.pc-body h4 { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.pc-body p { font-size: 14px; color: var(--body); line-height: 1.6; font-weight: 300; }
+
+/* Problem right — scenario card */
+.scenario-card {
+  background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+.sc-header {
+  padding: 18px 24px; border-bottom: 1px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sc-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+.sc-badge {
+  font-size: 11px; font-weight: 600; color: var(--red);
+  background: var(--red-subtle); padding: 3px 9px; border-radius: 4px;
+}
+
+.sc-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+.sc-row {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.sc-row-left { font-size: 13px; color: var(--body); }
+.sc-row-left strong { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 1px; }
+.sc-status {
+  font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 4px;
+  white-space: nowrap;
+}
+.s-error { background: var(--red-subtle); color: var(--red); }
+
+.sc-footer {
+  margin: 4px 24px 20px;
+  background: #F0FDF4; border: 1px solid #bbf7d0;
+  border-radius: 8px; padding: 14px 16px;
+}
+.sc-footer-label { font-size: 11px; font-weight: 700; color: #15803d; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.sc-footer-text { font-size: 13px; color: #166534; line-height: 1.5; }
+
+/* ─── SOLUTION REFRAME ─── */
+.reframe-section {
+  background: var(--ink);
+}
+
+.reframe-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+
+.reframe-checklist { display: flex; flex-direction: column; gap: 0; }
+.rc-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.rc-item:first-child { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 24px; }
+
+.rc-check {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,71,187,0.3); border: 1px solid rgba(0,71,187,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; flex-shrink: 0; color: #90b4f0; margin-top: 1px;
+  font-weight: 700;
+}
+
+.rc-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.rc-body span { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; font-weight: 300; }
+
+/* ─── PROCESS / PHASES ─── */
+.process-section { background: var(--bg); }
+
+.phases-list { display: flex; flex-direction: column; gap: 12px; margin-top: 56px; }
+
+.phase-item {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.phase-item:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+
+.phase-row {
+  display: grid; grid-template-columns: 200px 1fr;
+}
+
+.phase-left {
+  background: var(--bg-alt); padding: 28px 24px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+}
+.phase-num { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--border-dark); line-height: 1; letter-spacing: -0.03em; }
+.phase-name { font-size: 13px; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; }
+.phase-sub { font-size: 12px; color: var(--muted); font-style: italic; }
+
+.phase-steps-grid {
+  padding: 24px 32px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+}
+
+.phase-step {
+  padding: 0 24px;
+  border-right: 1px solid var(--border);
+}
+.phase-step:first-child { padding-left: 0; }
+.phase-step:last-child { border-right: none; }
+
+.ps-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  color: var(--blue); background: var(--blue-subtle);
+  padding: 3px 8px; border-radius: 4px; margin-bottom: 10px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.phase-step h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; line-height: 1.3; }
+.phase-step p { font-size: 13px; color: var(--body); line-height: 1.55; font-weight: 300; }
+
+/* ─── MODELS ─── */
+.models-section { background: var(--white); }
+
+.models-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: end; margin-bottom: 48px;
+}
+
+.models-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+
+.model-card {
+  border: 1.5px solid var(--border); border-radius: 12px; padding: 32px 28px;
+  transition: all 0.2s; position: relative; overflow: hidden;
+  background: var(--white);
+}
+.model-card:hover { border-color: var(--blue); box-shadow: 0 12px 40px rgba(0,71,187,0.1); transform: translateY(-3px); }
+
+.model-card.featured {
+  background: var(--blue); border-color: var(--blue);
+}
+
+.model-card-top {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+}
+.model-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--bg-alt);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.model-card.featured .model-icon { background: rgba(255,255,255,0.2); }
+
+.model-tag {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--blue);
+  background: var(--blue-subtle); padding: 4px 10px; border-radius: 4px;
+}
+.model-card.featured .model-tag { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); }
+
+.model-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700; color: var(--ink);
+  margin-bottom: 10px; line-height: 1.2; letter-spacing: -0.01em;
+}
+.model-card.featured h3 { color: var(--white); }
+
+.model-card > p { font-size: 14px; color: var(--body); line-height: 1.6; font-weight: 300; margin-bottom: 20px; }
+.model-card.featured > p { color: rgba(255,255,255,0.7); }
+
+.model-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+.model-card.featured .model-divider { background: rgba(255,255,255,0.15); }
+
+.model-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.model-list li {
+  font-size: 13px; color: var(--body);
+  display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;
+}
+.model-card.featured .model-list li { color: rgba(255,255,255,0.65); }
+.model-list li::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--blue); flex-shrink: 0; margin-top: 5px;
+}
+.model-card.featured .model-list li::before { background: rgba(255,255,255,0.4); }
+
+.model-ideal {
+  font-size: 12px; font-weight: 600; color: var(--body);
+  padding: 10px 14px; border-radius: 7px;
+  background: var(--bg-alt); border: 1px solid var(--border);
+  line-height: 1.4;
+}
+.model-ideal strong { color: var(--ink); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+.model-card.featured .model-ideal { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
+.model-card.featured .model-ideal strong { color: rgba(255,255,255,0.85); }
+
+/* ─── CASES ─── */
+.cases-section { background: var(--bg); }
+
+.case-featured-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; margin-bottom: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+
+.cfc-header {
+  background: var(--ink); padding: 40px 48px;
+  display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+}
+
+.cfc-tag {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  color: #90b4f0; background: rgba(0,71,187,0.25);
+  padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.cfc-client {
+  font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700;
+  color: var(--white); letter-spacing: -0.02em; line-height: 1; margin-bottom: 6px;
+}
+.cfc-event { font-size: 14px; color: rgba(255,255,255,0.4); font-weight: 300; }
+
+.cfc-metrics { display: flex; gap: 32px; }
+.cfc-metric { text-align: right; }
+.cfc-metric-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 700; color: var(--white);
+  letter-spacing: -0.03em; line-height: 1;
+}
+.cfc-metric-num span { color: #90b4f0; }
+.cfc-metric-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; text-align: right; }
+
+.cfc-body {
+  padding: 36px 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+
+.cfc-quote {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 18px; color: var(--body); line-height: 1.65;
+  border-left: 3px solid var(--blue); padding-left: 20px;
+}
+
+.cfc-details { display: flex; flex-direction: column; gap: 12px; }
+.cfc-detail-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; background: var(--bg-alt); border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.cfc-detail-icon { font-size: 16px; flex-shrink: 0; }
+.cfc-detail-text { font-size: 13px; color: var(--body); }
+.cfc-detail-text strong { color: var(--ink); font-weight: 600; }
+
+/* Secondary cases */
+.cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.case-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px; transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.case-card:hover { border-color: var(--blue); box-shadow: 0 8px 32px rgba(0,71,187,0.08); transform: translateY(-2px); }
+
+.case-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.case-card:hover::after { transform: scaleX(1); }
+
+.cc-tag {
+  font-size: 11px; font-weight: 600; color: var(--blue);
+  background: var(--blue-subtle); padding: 3px 10px;
+  border-radius: 4px; display: inline-block; margin-bottom: 14px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.cc-client {
+  font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.02em; margin-bottom: 4px;
+}
+.cc-event { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+.cc-metric {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px; font-weight: 700; color: var(--blue);
+  line-height: 1; letter-spacing: -0.03em; margin-bottom: 4px;
+}
+.cc-metric-label { font-size: 13px; color: var(--body); margin-bottom: 20px; line-height: 1.4; }
+.cc-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
+.cc-desc { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; }
+
+/* ─── PROOF / OPS ─── */
+.ops-section { background: var(--white); }
+
+.ops-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: end; margin-bottom: 48px;
+}
+
+.ops-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.ops-card {
+  padding: 28px 24px; border-right: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.ops-card:last-child { border-right: none; }
+.ops-card:hover { background: var(--bg-alt); }
+
+.ops-num {
+  font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700;
+  color: var(--blue); line-height: 1; margin-bottom: 10px; letter-spacing: -0.02em;
+}
+.ops-card h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.ops-card p { font-size: 12px; color: var(--body); line-height: 1.55; font-weight: 300; }
+
+.ops-manual-note {
+  background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px 24px;
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.omn-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.omn-text strong { font-size: 14px; font-weight: 600; color: var(--ink); display: block; margin-bottom: 4px; }
+.omn-text span { font-size: 13px; color: var(--body); line-height: 1.55; font-weight: 300; }
+
+/* ─── URGENCY BANNER ─── */
+.urgency-banner {
+  background: var(--blue-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 28px 40px;
+}
+.urgency-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
+}
+.urgency-left { display: flex; align-items: center; gap: 14px; }
+.urgency-icon {
+  width: 40px; height: 40px; border-radius: 8px; background: var(--blue);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.urgency-text h4 { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.urgency-text p { font-size: 13px; color: var(--body); font-weight: 300; max-width: 520px; line-height: 1.4; }
+
+/* ─── CTA / FORM ─── */
+.cta-section { background: var(--bg); }
+
+.cta-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+
+.cta-content h2 { margin-bottom: 14px; }
+.cta-content .lead { margin-bottom: 36px; }
+
+.cta-points { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.cta-points li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: var(--body); line-height: 1.5;
+}
+.cp-check {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue-subtle); border: 1px solid rgba(0,71,187,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--blue); font-weight: 700; margin-top: 1px;
+}
+
+/* Form card */
+.form-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 36px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+}
+
+.form-card-header { margin-bottom: 24px; }
+.form-card-header h3 {
+  font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.01em; margin-bottom: 4px;
+}
+.form-card-header p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { margin-bottom: 14px; }
+.form-group label {
+  display: block; font-size: 12px; font-weight: 600; color: var(--ink);
+  margin-bottom: 6px; letter-spacing: 0.02em;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 10px 14px;
+  border: 1.5px solid var(--border); border-radius: 7px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink);
+  background: var(--white); outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,71,187,0.1);
+}
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
+.form-group textarea { resize: none; height: 76px; }
+
+.form-submit {
+  width: 100%; background: var(--blue); color: var(--white);
+  border: none; padding: 14px; border-radius: 8px;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: all 0.15s; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.form-submit:hover { background: var(--blue-hover); box-shadow: 0 8px 24px rgba(0,71,187,0.35); transform: translateY(-1px); }
+
+.form-disclaimer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+
+.form-success { display: none; text-align: center; padding: 32px 0; }
+.form-success .fs-icon { font-size: 48px; margin-bottom: 16px; }
+.form-success h3 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.form-success p { font-size: 14px; color: var(--body); line-height: 1.6; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--white); border-top: 1px solid var(--border);
+  padding: 24px 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+}
+.footer-brand { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+.footer-brand span { color: var(--blue); }
+.footer-copy { font-size: 12px; color: var(--muted); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: var(--ink); }
+
+/* ─── VIDEO EMBEDS ─── */
+.video-wrap {
+  position: relative; width: 100%; padding-bottom: 56.25%;
+  border-radius: 10px; overflow: hidden;
+  background: var(--black);
+  border: 1px solid var(--border);
+}
+.video-wrap iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none;
+}
+
+/* Case with video layout */
+.cfc-body-video {
+  padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.cfc-body-video .cfc-video-col {
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.cfc-body-video .cfc-video-col .video-wrap {
+  border-radius: 0; border: none; height: 100%; padding-bottom: 0; min-height: 280px;
+}
+.cfc-body-video .cfc-video-col .video-wrap iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+.cfc-body-video .cfc-text-col {
+  padding: 36px 40px; display: flex; flex-direction: column; gap: 16px;
+}
+
+/* Secondary case with video */
+.case-card-video {
+  padding: 0; overflow: hidden;
+}
+.case-card-video .cc-video {
+  width: 100%;
+}
+.case-card-video .cc-video .video-wrap {
+  border-radius: 0; border: none; border-bottom: 1px solid var(--border);
+}
+.case-card-video .cc-body { padding: 28px 32px; }
+
+@media(max-width: 1024px) {
+  .cfc-body-video { grid-template-columns: 1fr; }
+  .cfc-body-video .cfc-video-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .cfc-body-video .cfc-video-col .video-wrap { padding-bottom: 56.25%; height: auto; min-height: unset; }
+}
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.08s; }
+.d2 { transition-delay: 0.16s; }
+.d3 { transition-delay: 0.24s; }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width: 1024px) {
+  .hero-inner, .problem-layout, .reframe-layout, .models-header, .cta-layout, .ops-header { grid-template-columns: 1fr; gap: 40px; }
+  .hero-right { display: none; }
+  .cfc-header { grid-template-columns: 1fr; }
+  .cfc-metrics { flex-direction: row; justify-content: flex-start; }
+  .cfc-body { grid-template-columns: 1fr; }
+  .cases-grid, .models-grid { grid-template-columns: 1fr; }
+  .ops-grid { grid-template-columns: 1fr 1fr; }
+  .phase-row { grid-template-columns: 1fr; }
+  .phase-left { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 24px; flex-direction: row; align-items: center; gap: 16px; }
+  .phase-steps-grid { grid-template-columns: 1fr; padding: 20px 24px; }
+  .phase-step { padding: 16px 0; border-right: none; border-bottom: 1px solid var(--border); }
+  .phase-step:last-child { border-bottom: none; }
+  section { padding: 64px 24px; }
+  nav { padding: 0 24px; }
+  .urgency-banner { padding: 20px 24px; }
+  .logos-bar { padding: 16px 24px; flex-wrap: wrap; gap: 16px; }
+}
+@media(max-width: 640px) {
+  .ops-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .cfc-header { padding: 28px 24px; }
+  .cfc-body { padding: 24px; }
+  .cfc-client { font-size: 32px; }
+  .cfc-metric-num { font-size: 36px; }
+  .nav-links { display: none; }
+  footer { flex-direction: column; text-align: center; }
+  section { padding: 48px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    Grupo T&M
+  </a>
+  <div class="nav-spacer"></div>
+  <div class="nav-links">
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#cases">Cases</a>
+    <a href="#modelos">Modelos</a>
+  </div>
+  <a href="#contato" class="nav-cta">Solicitar proposta →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <!-- Left -->
+    <div class="hero-left reveal">
+      <div class="hero-breadcrumb">
+        Grupo T&M
+        <span class="hero-breadcrumb-sep">/</span>
+        Operação de Loja em Eventos
+      </div>
+
+      <h1>
+        Sua loja oficial no evento.<br>
+        <em>Do produto ao caixa,</em><br>
+        sem improviso.
+      </h1>
+
+      <p class="hero-sub">
+        O Grupo T&M assume a operação completa de varejo para o seu evento — da criação da coleção ao fechamento financeiro. Você foca no evento. A gente cuida da loja.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#contato" class="btn-primary">Solicitar proposta para meu evento →</a>
+        <a href="#como-funciona" class="btn-secondary">Ver como funciona</a>
+      </div>
+
+      <div class="hero-trust">
+        <span class="hero-trust-label">Já operamos para</span>
+        <div class="hero-trust-logos">
+          <span class="trust-logo">RD Summit</span>
+          <span class="trust-logo">Gupy</span>
+          <span class="trust-logo">PSG Academy</span>
+          <span class="trust-logo">Tecnoshow</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right — visual panel -->
+    <div class="hero-right reveal d1">
+      <div class="hero-visual-panel">
+        <div class="hvp-inner">
+          <div class="hvp-badge">
+            <span class="hvp-live-dot"></span>
+            Dados de operações reais
+          </div>
+
+          <div class="hvp-stats">
+            <div class="hvp-stat">
+              <div class="hvp-stat-num">2<span>.500</span><span style="font-size:20px">+</span></div>
+              <div class="hvp-stat-label">vendas · RD Summit 2024</div>
+            </div>
+            <div class="hvp-stat">
+              <div class="hvp-stat-num">3<span>×</span></div>
+              <div class="hvp-stat-label">edições PSG Academy</div>
+            </div>
+          </div>
+
+          <div class="hvp-timeline">
+            <div class="hvp-tl-title">Ciclo operacional</div>
+
+            <div class="hvp-tl-item">
+              <div class="hvp-tl-dot-wrap">
+                <div class="hvp-tl-dot done"></div>
+                <div class="hvp-tl-line"></div>
+              </div>
+              <div>
+                <div class="hvp-tl-phase">Briefing & Curadoria <span class="done">Concluído</span></div>
+                <div class="hvp-tl-sub">Análise de público e definição do mix</div>
+              </div>
+            </div>
+
+            <div class="hvp-tl-item">
+              <div class="hvp-tl-dot-wrap">
+                <div class="hvp-tl-dot done"></div>
+                <div class="hvp-tl-line"></div>
+              </div>
+              <div>
+                <div class="hvp-tl-phase">Produção da Coleção <span class="done">Concluído</span></div>
+                <div class="hvp-tl-sub">2.000 peças · aprovação de amostra</div>
+              </div>
+            </div>
+
+            <div class="hvp-tl-item">
+              <div class="hvp-tl-dot-wrap">
+                <div class="hvp-tl-dot active"></div>
+                <div class="hvp-tl-line"></div>
+              </div>
+              <div>
+                <div class="hvp-tl-phase">Operação no Evento <span class="active">Em andamento</span></div>
+                <div class="hvp-tl-sub">Stand montado · PDV ativo</div>
+              </div>
+            </div>
+
+            <div class="hvp-tl-item">
+              <div class="hvp-tl-dot-wrap">
+                <div class="hvp-tl-dot"></div>
+              </div>
+              <div>
+                <div class="hvp-tl-phase">Fechamento & DRE <span style="background:#F3F5F9;color:#8891A8;font-size:10px;padding:2px 7px;border-radius:4px;margin-left:6px;font-weight:600;">Pendente</span></div>
+                <div class="hvp-tl-sub">Auditoria e prestação de contas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOS BAR -->
+<div style="border-bottom: 1px solid var(--border);">
+  <div class="logos-bar">
+    <span class="logos-bar-label">Clientes que confiam</span>
+    <div class="logos-bar-sep"></div>
+    <div class="logos-bar-items">
+      <span class="logos-bar-client">RD Summit</span>
+      <span class="logos-bar-client">Gupy</span>
+      <span class="logos-bar-client">PSG Academy</span>
+      <span class="logos-bar-client">Rede Fleming</span>
+      <span class="logos-bar-client">Tecnoshow</span>
+      <span class="logos-bar-client">QuintoAndar</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEMA -->
+<section class="problem-section">
+  <div class="container">
+    <div class="problem-layout">
+      <div class="reveal">
+        <div class="section-tag">O problema real</div>
+        <h2 class="headline">Montar uma loja em evento<br>parece simples. <em>Até você tentar.</em></h2>
+        <p class="lead" style="margin-bottom:0">O evento é o maior ativo da sua marca. Uma operação de loja improvisada — fila, produto errado, caixa que trava — destrói a experiência de mil pessoas de uma vez.</p>
+
+        <div class="problem-cards">
+          <div class="problem-card">
+            <div class="pc-icon">📦</div>
+            <div class="pc-body">
+              <h4>Fornecedor que não entende de varejo</h4>
+              <p>A confecção entrega o produto. Mas quem monta o stand, treina a equipe e controla o estoque em tempo real durante 500 pessoas em 20 minutos?</p>
+            </div>
+          </div>
+          <div class="problem-card">
+            <div class="pc-icon">👥</div>
+            <div class="pc-body">
+              <h4>Equipe improvisada sob pressão de multidão</h4>
+              <p>Vender para 500 pessoas num intervalo de palestra é diferente de qualquer outra situação de varejo. Sem treinamento específico, a equipe trava.</p>
+            </div>
+          </div>
+          <div class="problem-card">
+            <div class="pc-icon">📊</div>
+            <div class="pc-body">
+              <h4>Grade errada, estoque encalhado</h4>
+              <p>Sem inteligência de curadoria e histórico de sell-out, você produz o tamanho errado e termina o evento com caixa no vermelho e depósito cheio.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal d1" style="padding-top:56px">
+        <div class="scenario-card">
+          <div class="sc-header">
+            <span class="sc-title">Cenário comum — sem a T&M</span>
+            <span class="sc-badge">Situação real</span>
+          </div>
+          <div class="sc-body">
+            <div class="sc-row">
+              <div class="sc-row-left">
+                <strong>Uniforme P — colaborador do stand</strong>
+                Pedido feito 2 semanas antes
+              </div>
+              <span class="sc-status s-error">Tamanho furou</span>
+            </div>
+            <div class="sc-row">
+              <div class="sc-row-left">
+                <strong>Kit onboarding — 80 participantes</strong>
+                Chegou no dia do evento
+              </div>
+              <span class="sc-status s-error">Sem embalagem</span>
+            </div>
+            <div class="sc-row">
+              <div class="sc-row-left">
+                <strong>Caixa do PDV — pico de vendas</strong>
+                Terminal sem backup de internet
+              </div>
+              <span class="sc-status s-error">Sistema travou</span>
+            </div>
+            <div class="sc-row">
+              <div class="sc-row-left">
+                <strong>Fechamento financeiro pós-evento</strong>
+                DRE solicitado pelo parceiro
+              </div>
+              <span class="sc-status s-error">Dados imprecisos</span>
+            </div>
+          </div>
+          <div class="sc-footer">
+            <div class="sc-footer-label">Com a T&M</div>
+            <div class="sc-footer-text">Protocolo documentado para cada etapa. Do briefing ao fechamento do caixa — sem improviso.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFRAME -->
+<section class="reframe-section">
+  <div class="container">
+    <div class="reframe-layout">
+      <div class="reveal">
+        <div class="section-tag" style="color:#90b4f0"><span style="background:#90b4f0"></span>A solução</div>
+        <h2 class="headline white">Com a T&M, você não precisa <em>se preocupar</em> com nada disso.</h2>
+        <p class="lead white" style="margin-top:16px">A gente assume do planejamento ao DRE. Você recebe o relatório — e o lucro.</p>
+      </div>
+      <div class="reframe-checklist reveal d1">
+        <div class="rc-item">
+          <div class="rc-check">✓</div>
+          <div class="rc-body">
+            <strong>Antes do evento</strong>
+            <span>Desenvolvemos a coleção, aprovamos amostras, definimos a grade de tamanhos certa para o seu público com base em dados reais — não em chute.</span>
+          </div>
+        </div>
+        <div class="rc-item">
+          <div class="rc-check">✓</div>
+          <div class="rc-body">
+            <strong>Durante o evento</strong>
+            <span>Staff treinado, PDV configurado com backup, estoque organizado e reposição contínua. Operação de alto volume sem improviso, do primeiro ao último cliente.</span>
+          </div>
+        </div>
+        <div class="rc-item">
+          <div class="rc-check">✓</div>
+          <div class="rc-body">
+            <strong>Depois do evento</strong>
+            <span>Logística reversa, auditoria de estoque, fechamento fiscal completo e DRE em até 48h. Você recebe tudo pronto — transparente e auditável.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section class="process-section" id="como-funciona">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Como funciona</div>
+      <h2 class="headline">O processo completo,<br>fase por <em>fase.</em></h2>
+    </div>
+
+    <div class="phases-list">
+      <div class="phase-item reveal">
+        <div class="phase-row">
+          <div class="phase-left">
+            <div class="phase-num">01</div>
+            <div class="phase-name">Preparação</div>
+            <div class="phase-sub">O bastidor</div>
+          </div>
+          <div class="phase-steps-grid">
+            <div class="phase-step">
+              <span class="ps-tag">Inteligência</span>
+              <h4>Curadoria baseada em dados</h4>
+              <p>Analisamos perfil do público, histórico de sell-out, faixa de ingresso e clima. A grade de produção é balizada em números — não em suposição.</p>
+            </div>
+            <div class="phase-step">
+              <span class="ps-tag">Design</span>
+              <h4>Criação da coleção exclusiva</h4>
+              <p>Design interno ou com parceiros criativos (como Levi Pedroso no RD Summit). Mix estratégico: desejo, conforto, impulso e personalização.</p>
+            </div>
+            <div class="phase-step">
+              <span class="ps-tag">Produção</span>
+              <h4>Confecção com amostra aprovada</h4>
+              <p>Fabricação própria, amostra física antes da produção em larga escala. Nenhuma surpresa de acabamento no dia do evento.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-item reveal d1">
+        <div class="phase-row">
+          <div class="phase-left">
+            <div class="phase-num">02</div>
+            <div class="phase-name">O Evento</div>
+            <div class="phase-sub">Operação ao vivo</div>
+          </div>
+          <div class="phase-steps-grid">
+            <div class="phase-step">
+              <span class="ps-tag">Logística</span>
+              <h4>Montagem estratégica do stand</h4>
+              <p>Transporte, montagem e posicionamento de estoque para maximizar velocidade de reposição. Estoque de giro rápido atrás do balcão.</p>
+            </div>
+            <div class="phase-step">
+              <span class="ps-tag">Equipe</span>
+              <h4>Staff treinado para alta pressão</h4>
+              <p>Briefing de produto, script de vendas, cross-selling e prevenção de perdas. Daily obrigatório de 10 min antes de cada abertura.</p>
+            </div>
+            <div class="phase-step">
+              <span class="ps-tag">Tecnologia</span>
+              <h4>PDV com redundância total</h4>
+              <p>Sistema EYE Mobile com NFC-e, terminais Itaú com backups e roteador 4G dedicado. O caixa não para — nem no pico.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-item reveal d2">
+        <div class="phase-row">
+          <div class="phase-left">
+            <div class="phase-num">03</div>
+            <div class="phase-name">Encerramento</div>
+            <div class="phase-sub">A entrega</div>
+          </div>
+          <div class="phase-steps-grid">
+            <div class="phase-step">
+              <span class="ps-tag">Reversa</span>
+              <h4>Logística reversa organizada</h4>
+              <p>Protocolo de desmontagem rápida, embalagem segura e retorno do estoque. Auditoria cega feita na matriz — não no caos do desmonte.</p>
+            </div>
+            <div class="phase-step">
+              <span class="ps-tag">Fiscal</span>
+              <h4>Fechamento fiscal e financeiro</h4>
+              <p>Exportação de XMLs das NFC-e, conciliação de caixa e nota de retorno de estoque dentro do prazo legal. DRE preliminar em 48h.</p>
+            </div>
+            <div class="phase-step">
+              <span class="ps-tag">Pós-evento</span>
+              <h4>Estratégia para sobras de estoque</h4>
+              <p>Estoque remanescente não encalha. Apoiamos a liquidação via e-commerce, marketplace ou armazenamento para reuso futuro.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELOS -->
+<section class="models-section" id="modelos">
+  <div class="container">
+    <div class="models-header">
+      <div class="reveal">
+        <div class="section-tag">Modelos de negócio</div>
+        <h2 class="headline">Encontre o formato certo<br>para o seu evento.</h2>
+      </div>
+      <p class="lead reveal d1">Não trabalhamos com modelo único. Adaptamos a estrutura comercial ao porte, ao risco e ao objetivo de cada parceiro.</p>
+    </div>
+
+    <div class="models-grid">
+      <div class="model-card reveal">
+        <div class="model-card-top">
+          <div class="model-icon">🤝</div>
+          <span class="model-tag">Risco compartilhado</span>
+        </div>
+        <h3>Parceria de Risco</h3>
+        <p>Você entra com espaço e estrutura. A T&M investe 100% em produção, logística e equipe. Lucro compartilhado ao final.</p>
+        <div class="model-divider"></div>
+        <ul class="model-list">
+          <li>Zero investimento inicial do parceiro</li>
+          <li>T&M assume 100% do risco de produção</li>
+          <li>Comissão acordada sobre vendas</li>
+        </ul>
+        <div class="model-ideal">
+          <strong>Ideal para</strong>
+          Eventos em crescimento que querem receita sem investimento inicial
+        </div>
+      </div>
+
+      <div class="model-card featured reveal d1">
+        <div class="model-card-top">
+          <div class="model-icon">🏆</div>
+          <span class="model-tag">Mais popular</span>
+        </div>
+        <h3>Operação Completa</h3>
+        <p>A T&M banca o espaço, a produção e toda a operação. Lucro total das vendas é nosso — repassamos royalties acordados à marca.</p>
+        <div class="model-divider"></div>
+        <ul class="model-list">
+          <li>Sem custo operacional para o evento</li>
+          <li>Royalties garantidos sobre vendas</li>
+          <li>Gestão 100% T&M do início ao fim</li>
+        </ul>
+        <div class="model-ideal">
+          <strong>Ideal para</strong>
+          Grandes eventos consolidados com público fiel e alto volume
+        </div>
+      </div>
+
+      <div class="model-card reveal d2">
+        <div class="model-card-top">
+          <div class="model-icon">⚙️</div>
+          <span class="model-tag">Fee de gestão</span>
+        </div>
+        <h3>Gestão Terceirizada</h3>
+        <p>Você investe nos produtos e no espaço. A T&M entra com know-how completo: logística, sistemas, equipe e vendas.</p>
+        <div class="model-divider"></div>
+        <ul class="model-list">
+          <li>Controle total do produto pelo cliente</li>
+          <li>Lucro líquido fica com o organizador</li>
+          <li>Fee de gestão de 16–20% da operação</li>
+        </ul>
+        <div class="model-ideal">
+          <strong>Ideal para</strong>
+          Marcas com produto próprio que precisam de expertise operacional
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases-section" id="cases">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:40px">
+      <div class="section-tag">Cases reais</div>
+      <h2 class="headline">Resultados que<br><em>falam por si.</em></h2>
+    </div>
+
+    <div class="case-featured-card reveal">
+      <div class="cfc-header">
+        <div>
+          <span class="cfc-tag">Operação de varejo completa · 2024</span>
+          <div class="cfc-client">RD Summit</div>
+          <div class="cfc-event">Com designer Levi Pedroso · Florianópolis, SC</div>
+        </div>
+        <div class="cfc-metrics">
+          <div class="cfc-metric">
+            <div class="cfc-metric-num">2.500<span>+</span></div>
+            <div class="cfc-metric-label">vendas em 3 dias</div>
+          </div>
+          <div class="cfc-metric">
+            <div class="cfc-metric-num">2.000</div>
+            <div class="cfc-metric-label">peças produzidas</div>
+          </div>
+        </div>
+      </div>
+      <div class="cfc-body-video">
+        <div class="cfc-video-col">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/zGabrAYh7JE" title="RD Summit 2024 — Grupo T&M" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="cfc-text-col">
+          <div class="cfc-quote" style="font-size:16px">
+            "Fomos além dos uniformes. Assumimos o desafio completo: criação da coleção, 2.000 peças para o staff e gestão total da loja oficial — física e online — do maior evento de marketing da América Latina."
+          </div>
+          <div class="cfc-details" style="display:flex;flex-direction:column;gap:10px">
+            <div class="cfc-detail-row">
+              <span class="cfc-detail-icon">✏️</span>
+              <div class="cfc-detail-text"><strong>Coleção exclusiva</strong> com designer Levi Pedroso</div>
+            </div>
+            <div class="cfc-detail-row">
+              <span class="cfc-detail-icon">🏪</span>
+              <div class="cfc-detail-text"><strong>Loja física + online</strong> operadas simultaneamente</div>
+            </div>
+            <div class="cfc-detail-row">
+              <span class="cfc-detail-icon">👔</span>
+              <div class="cfc-detail-text"><strong>2.000 peças de staff</strong> produzidas e gerenciadas</div>
+            </div>
+            <div class="cfc-detail-row">
+              <span class="cfc-detail-icon">📊</span>
+              <div class="cfc-detail-text"><strong>DRE completo</strong> entregue em 48h pós-evento</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cases-grid" style="margin-top:16px">
+      <div class="case-card case-card-video reveal">
+        <div class="cc-video">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/Z2HcXbib3OU" title="PSG Academy — Grupo T&M" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="cc-body">
+          <span class="cc-tag">Parceria de risco · 3 edições</span>
+          <div class="cc-client">PSG Academy</div>
+          <div class="cc-event">PSG Cup Brasil · Salvador 2022 & Porto Alegre 2023</div>
+          <div class="cc-metric">3×</div>
+          <div class="cc-metric-label">edições consecutivas — confiança renovada</div>
+          <div class="cc-divider"></div>
+          <div class="cc-desc">Loja oficial em eventos esportivos com público jovem e alto poder de compra. Coleções de performance exclusivas PSG, operação de alto giro e presença consolidada no circuito de eventos esportivos de base.</div>
+        </div>
+      </div>
+
+      <div class="case-card case-card-video reveal d1">
+        <div class="cc-video">
+          <div class="video-wrap">
+            <iframe src="https://www.youtube.com/embed/BMO_JX90RUM" title="Gupy HR4 Results — Grupo T&M" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        <div class="cc-body">
+          <span class="cc-tag">Fulfillment + loja integrados</span>
+          <div class="cc-client">Gupy</div>
+          <div class="cc-event">HR4 Results 2025 · maior evento de RH do Brasil</div>
+          <div class="cc-metric">360°</div>
+          <div class="cc-metric-label">loja oficial + hub de distribuição de kits</div>
+          <div class="cc-divider"></div>
+          <div class="cc-desc">A loja não foi só ponto de venda — virou hub de distribuição de kits exclusivos para congressistas. Operação que elevou a experiência da marca Gupy junto a gestores e líderes de RH.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPS / PROTOCOLO -->
+<section class="ops-section">
+  <div class="container">
+    <div class="ops-header">
+      <div class="reveal">
+        <div class="section-tag">Excelência operacional</div>
+        <h2 class="headline">Protocolo.<br><em>Não improviso.</em></h2>
+      </div>
+      <p class="lead reveal d1">50+ procedimentos documentados — da modelagem fiscal ao protocolo de reposição durante pico de vendas. Quando o evento acontece, nossa equipe já sabe exatamente o que fazer.</p>
+    </div>
+
+    <div class="ops-grid">
+      <div class="ops-card reveal">
+        <div class="ops-num">01</div>
+        <h4>Curadoria inteligente</h4>
+        <p>Análise de público, sell-out histórico e curva de grade por nicho antes de produzir uma única peça.</p>
+      </div>
+      <div class="ops-card reveal d1">
+        <div class="ops-num">02</div>
+        <h4>Blindagem fiscal</h4>
+        <p>CFOP correto de remessa para feira, NFC-e homologada e nota de retorno dentro do prazo legal. Zero risco de retenção de carga.</p>
+      </div>
+      <div class="ops-card reveal d2">
+        <div class="ops-num">03</div>
+        <h4>PDV com redundância</h4>
+        <p>Terminais backup, roteador 4G dedicado, bobinas extras. Cada máquina testada na véspera com transação real de R$ 1,00.</p>
+      </div>
+      <div class="ops-card reveal d3">
+        <div class="ops-num">04</div>
+        <h4>Auditoria cega pós-evento</h4>
+        <p>Equipe de contagem não tem acesso ao relatório de vendas. Zero manipulação de inventário. Rombo calculado com dados cruzados.</p>
+      </div>
+    </div>
+
+    <div class="ops-manual-note reveal" style="margin-top: 16px">
+      <span class="omn-icon">📋</span>
+      <div class="omn-text">
+        <strong>Manual operacional proprietário com 13 capítulos e mais de 50 protocolos documentados</strong>
+        <span>Da negociação comercial à logística reversa — cada etapa tem um padrão. Isso é o que diferencia uma operação profissional de uma tentativa bem-intencionada.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-banner">
+  <div class="urgency-inner">
+    <div class="urgency-left">
+      <div class="urgency-icon">📅</div>
+      <div class="urgency-text">
+        <h4>Eventos grandes exigem 6 meses de antecedência.</h4>
+        <p>Desenvolvimento de coleção, produção, aprovação de amostra e logística precisam de tempo. Quanto antes iniciarmos, melhor a operação que conseguimos entregar.</p>
+      </div>
+    </div>
+    <a href="#contato" class="btn-primary">Iniciar planejamento agora →</a>
+  </div>
+</div>
+
+<!-- CTA / FORM -->
+<section class="cta-section" id="contato">
+  <div class="container">
+    <div class="cta-layout">
+      <div class="cta-content reveal">
+        <div class="section-tag">Vamos conversar</div>
+        <h2 class="headline">Pronto para transformar<br>seu evento em <em>receita?</em></h2>
+        <p class="lead">Conte sobre seu evento e um especialista T&M entra em contato em até 24 horas com uma proposta adequada ao seu formato.</p>
+        <ul class="cta-points">
+          <li><span class="cp-check">✓</span>Diagnóstico gratuito da sua operação atual</li>
+          <li><span class="cp-check">✓</span>Proposta com modelo comercial adequado ao seu evento</li>
+          <li><span class="cp-check">✓</span>Sem compromisso — só uma conversa estratégica</li>
+          <li><span class="cp-check">✓</span>Experiência em eventos de 500 a 50.000 participantes</li>
+        </ul>
+      </div>
+
+      <div class="reveal d1">
+        <div class="form-card">
+          <div id="formContent">
+            <div class="form-card-header">
+              <h3>Fale com a T&M</h3>
+              <p>Preencha abaixo. Um especialista entra em contato em até 24h úteis.</p>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nome</label>
+                <input type="text" id="nome" placeholder="Seu nome completo" />
+              </div>
+              <div class="form-group">
+                <label>Empresa / Evento</label>
+                <input type="text" id="empresa" placeholder="Nome do evento" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="email" placeholder="voce@empresa.com.br" />
+              </div>
+              <div class="form-group">
+                <label>WhatsApp</label>
+                <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Data prevista do evento</label>
+                <input type="text" id="data" placeholder="Ex: Outubro/2025" />
+              </div>
+              <div class="form-group">
+                <label>Público estimado</label>
+                <select id="publico">
+                  <option value="">Selecione</option>
+                  <option>Até 1.000 pessoas</option>
+                  <option>1.000 – 5.000 pessoas</option>
+                  <option>5.000 – 20.000 pessoas</option>
+                  <option>Mais de 20.000 pessoas</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Contexto do evento <span style="color:var(--muted);font-weight:400">(opcional)</span></label>
+              <textarea id="contexto" placeholder="Tipo de evento, formato, o que já tem definido..."></textarea>
+            </div>
+
+            <button class="form-submit" onclick="submitForm()">
+              Solicitar proposta para meu evento →
+            </button>
+            <p class="form-disclaimer">🔒 Seus dados estão seguros. Respondemos em até 24h úteis.</p>
+          </div>
+
+          <div class="form-success" id="formSuccess">
+            <div class="fs-icon">✅</div>
+            <h3>Proposta em andamento!</h3>
+            <p>Um especialista T&M vai entrar em contato em até 24 horas para entender melhor seu evento e montar uma proposta personalizada.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Grupo <span>T&M</span></div>
+  <span class="footer-copy">© 2026 Grupo T&M. Todos os direitos reservados.</span>
+  <div class="footer-links">
+    <a href="https://instagram.com/temgrupo">@temgrupo</a>
+    <a href="https://humbertodvigo.com">humbertodvigo.com</a>
+    <a href="https://envios.temgrupo.com.br">T&M Envios</a>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 50);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Nav background on scroll
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.boxShadow = window.scrollY > 40
+    ? '0 1px 12px rgba(0,0,0,0.08)'
+    : 'none';
+});
+
+// WhatsApp mask
+document.getElementById('whatsapp').addEventListener('input', function(e) {
+  let v = e.target.value.replace(/\D/g,'');
+  v = v.replace(/^(\d{2})(\d)/,'($1) $2');
+  v = v.replace(/(\d)(\d{4})$/,'$1-$2');
+  e.target.value = v;
+});
+
+// Form submit
+function submitForm() {
+  const required = ['nome','empresa','email','whatsapp','publico'];
+  const empty = required.some(id => !document.getElementById(id).value.trim());
+  if (empty) { alert('Por favor, preencha os campos obrigatórios.'); return; }
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Armazenamento & Envio sob Demanda — Grupo T&M</title>
+<meta name="description" content="Seus uniformes e brindes armazenados no nosso CD. Envios para qualquer colaborador do Brasil com um clique. Sem depósito, sem planilha, sem frete no cartão pessoal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:        #0047BB;
+  --blue-dark:   #001E60;
+  --blue-hover:  #0052D4;
+  --blue-subtle: #EEF3FC;
+  --blue-border: rgba(0,71,187,0.15);
+  --white:       #FFFFFF;
+  --bg:          #F8F9FC;
+  --bg-alt:      #F2F4F9;
+  --border:      #E4E8F2;
+  --border-mid:  #D0D6E8;
+  --ink:         #191C28;
+  --ink-dark:    #0C0F1A;
+  --body:        #48506A;
+  --muted:       #8792AA;
+  --green:       #16a34a;
+  --green-bg:    #f0fdf4;
+  --red:         #dc2626;
+  --red-bg:      #fef2f2;
+  --amber:       #d97706;
+  --amber-bg:    #fffbeb;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white); color: var(--ink);
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--blue); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 62px; background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 40px; gap: 0;
+  transition: box-shadow 0.2s;
+}
+nav.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+.nav-back {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  padding: 6px 12px 6px 0; border-right: 1px solid var(--border);
+  margin-right: 20px; transition: color 0.15s;
+}
+.nav-back:hover { color: var(--ink); }
+.nav-logo {
+  display: flex; align-items: center; gap: 8px; text-decoration: none;
+}
+.nav-logo-mark {
+  width: 28px; height: 28px; border-radius: 6px; background: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-logo-mark svg { width: 16px; height: 16px; }
+.nav-logo-text { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+.nav-logo-text span { color: var(--blue); }
+.nav-sep { width: 1px; height: 16px; background: var(--border); margin: 0 16px; }
+.nav-page { font-size: 13px; color: var(--muted); }
+.nav-spacer { flex: 1; }
+.nav-cta {
+  background: var(--blue); color: var(--white);
+  padding: 7px 18px; border-radius: 7px;
+  font-size: 13.5px; font-weight: 600; text-decoration: none;
+  transition: all 0.15s;
+}
+.nav-cta:hover { background: var(--blue-hover); box-shadow: 0 4px 14px rgba(0,71,187,0.3); }
+
+/* ── HERO ── */
+.hero {
+  padding-top: 62px; background: var(--white);
+  border-bottom: 1px solid var(--border); overflow: hidden;
+}
+.hero-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 76px 40px 0;
+  display: grid; grid-template-columns: 1fr 480px;
+  gap: 60px; align-items: end;
+}
+.hero-left { padding-bottom: 68px; }
+
+.hero-breadcrumb {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; font-weight: 600; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 24px;
+}
+.hero-breadcrumb-sep { color: var(--border-mid); font-weight: 300; }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 4.2vw, 58px);
+  font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 20px;
+}
+.hero h1 em { font-style: italic; color: var(--blue); }
+
+.hero-sub {
+  font-size: 17px; line-height: 1.7; color: var(--body);
+  font-weight: 300; max-width: 460px; margin-bottom: 36px;
+}
+
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 44px; }
+
+.btn-primary {
+  background: var(--blue); color: var(--white);
+  padding: 12px 26px; border-radius: 8px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  transition: all 0.15s; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.btn-primary:hover { background: var(--blue-hover); box-shadow: 0 6px 20px rgba(0,71,187,0.3); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--white); color: var(--ink);
+  padding: 12px 26px; border-radius: 8px;
+  font-size: 14px; font-weight: 500; text-decoration: none;
+  border: 1.5px solid var(--border-mid); transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-subtle); }
+
+.hero-trust {
+  display: flex; align-items: center; gap: 14px;
+  padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.trust-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.trust-logos { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.trust-logo { font-size: 13px; font-weight: 700; color: var(--border-mid); letter-spacing: -0.01em; cursor: default; transition: color 0.2s; }
+.trust-logo:hover { color: var(--ink); }
+
+/* Hero right — storage UI mock */
+.hero-right { align-self: stretch; display: flex; flex-direction: column; justify-content: flex-end; }
+
+.hero-panel {
+  background: var(--bg); border: 1px solid var(--border);
+  border-bottom: none; border-radius: 16px 16px 0 0;
+  overflow: hidden; position: relative;
+}
+.hero-panel::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 20px 20px; opacity: 0.5; pointer-events: none;
+}
+.hp-inner { position: relative; z-index: 1; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+
+.hp-topbar {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hp-topbar-left { display: flex; align-items: center; gap: 8px; }
+.hp-topbar-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); }
+.hp-topbar-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.hp-live {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600; color: var(--green); letter-spacing: 0.04em;
+}
+.hp-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hp-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.hp-stat {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 9px; padding: 14px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.hp-stat-n {
+  font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+  color: var(--ink); line-height: 1; letter-spacing: -0.02em;
+}
+.hp-stat-n em { color: var(--blue); font-style: normal; }
+.hp-stat-l { font-size: 10px; color: var(--muted); margin-top: 4px; line-height: 1.3; }
+
+.hp-order-list { display: flex; flex-direction: column; gap: 7px; }
+.hp-order {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 9px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.hp-order-icon { font-size: 18px; flex-shrink: 0; }
+.hp-order-info { flex: 1; min-width: 0; }
+.hp-order-name { font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hp-order-dest { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.hp-order-status {
+  font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+.s-ok  { background: var(--green-bg); color: var(--green); }
+.s-go  { background: #eff6ff; color: #2563eb; }
+.s-prep{ background: var(--amber-bg); color: var(--amber); }
+
+/* ── LOGOS ── */
+.logos-bar {
+  border-bottom: 1px solid var(--border);
+}
+.logos-inner {
+  max-width: 1200px; margin: 0 auto; padding: 18px 40px;
+  display: flex; align-items: center; gap: 28px;
+}
+.logos-label { font-size: 11px; color: var(--muted); white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em; }
+.logos-divider { width: 1px; height: 16px; background: var(--border); flex-shrink: 0; }
+.logos-row { display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
+.logos-client { font-size: 14px; font-weight: 700; color: var(--border-mid); letter-spacing: -0.01em; cursor: default; transition: color 0.2s; }
+.logos-client:hover { color: var(--ink); }
+
+/* ── SECTIONS ── */
+section { padding: 88px 40px; }
+.container { max-width: 1200px; margin: 0 auto; }
+
+.section-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;
+}
+.section-tag::before { content: ''; width: 18px; height: 1.5px; background: var(--blue); }
+
+h2.sh {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 14px;
+}
+h2.sh em { font-style: italic; color: var(--blue); }
+h2.sh.white { color: var(--white); }
+h2.sh.white em { color: #90b4f0; }
+
+.section-lead {
+  font-size: 17px; line-height: 1.7; color: var(--body); font-weight: 300;
+}
+
+/* ── PROBLEM ── */
+.problem-section { background: var(--white); }
+
+.problem-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+
+.problem-left { padding-top: 0; }
+
+.problem-cards { margin-top: 40px; display: flex; flex-direction: column; }
+.prob-card {
+  display: flex; gap: 16px; padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.2s;
+}
+.prob-card:first-child { border-top: 1px solid var(--border); }
+.prob-card:hover { padding-left: 10px; }
+
+.prob-icon {
+  width: 38px; height: 38px; border-radius: 9px; flex-shrink: 0;
+  background: var(--red-bg); display: flex; align-items: center; justify-content: center;
+  font-size: 18px; margin-top: 1px; transition: transform 0.2s;
+}
+.prob-card:hover .prob-icon { transform: scale(1.08); }
+.prob-body h4 { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+.prob-body p { font-size: 14px; color: var(--body); line-height: 1.6; font-weight: 300; }
+
+/* Before/after visual */
+.ba-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+.ba-header {
+  padding: 16px 20px; background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 0;
+}
+.ba-tab {
+  flex: 1; text-align: center; font-size: 12px; font-weight: 700;
+  padding: 8px; border-radius: 7px; cursor: pointer;
+  transition: all 0.2s; color: var(--muted);
+}
+.ba-tab.active { background: var(--ink); color: var(--white); }
+.ba-tab.active.green { background: var(--green); }
+
+.ba-body { padding: 16px; }
+.ba-rows { display: flex; flex-direction: column; gap: 8px; }
+.ba-row {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.ba-row-icon { font-size: 16px; flex-shrink: 0; }
+.ba-row-text { flex: 1; }
+.ba-row-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.ba-row-text span { font-size: 12px; color: var(--body); font-weight: 300; }
+.ba-pill {
+  font-size: 11px; font-weight: 700; padding: 3px 9px;
+  border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+.pill-bad  { background: var(--red-bg); color: var(--red); }
+.pill-ok   { background: var(--green-bg); color: var(--green); }
+.pill-warn { background: var(--amber-bg); color: var(--amber); }
+
+.ba-footer {
+  margin: 0 16px 16px; border-radius: 8px; padding: 14px 16px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.ba-footer.bad  { background: var(--red-bg); border: 1px solid #fecaca; }
+.ba-footer.good { background: var(--green-bg); border: 1px solid #bbf7d0; }
+.ba-footer-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.ba-footer-text { font-size: 13px; line-height: 1.5; }
+.ba-footer.bad  .ba-footer-text { color: var(--red); }
+.ba-footer.good .ba-footer-text { color: var(--green); }
+.ba-footer-text strong { display: block; font-weight: 700; margin-bottom: 2px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ── HOW IT WORKS ── */
+.how-section { background: var(--bg); }
+
+.how-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: end; margin-bottom: 52px;
+}
+
+.steps-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.step-card {
+  padding: 28px 24px; border-right: 1px solid var(--border);
+  position: relative; transition: background 0.15s;
+}
+.step-card:last-child { border-right: none; }
+.step-card:hover { background: var(--bg); }
+
+.step-num {
+  font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700;
+  color: var(--border); line-height: 1; margin-bottom: 14px; letter-spacing: -0.02em;
+}
+.step-icon { font-size: 24px; margin-bottom: 10px; }
+.step-card h4 { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 7px; }
+.step-card p { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; }
+
+.step-arrow {
+  position: absolute; top: 28px; right: -12px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--blue-subtle); border: 1px solid var(--blue-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--blue); z-index: 1;
+}
+.step-card:last-child .step-arrow { display: none; }
+
+.how-note {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 22px;
+  display: flex; align-items: center; gap: 14px;
+}
+.how-note-icon { font-size: 22px; flex-shrink: 0; }
+.how-note-text strong { font-size: 14px; font-weight: 600; color: var(--ink); display: block; margin-bottom: 3px; }
+.how-note-text span { font-size: 13px; color: var(--body); font-weight: 300; line-height: 1.5; }
+
+/* ── DASHBOARD ── */
+.dash-section {
+  background: var(--ink-dark); position: relative; overflow: hidden;
+}
+.dash-section::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(0,71,187,0.15) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.dash-section::after {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,71,187,0.2), transparent 65%);
+  pointer-events: none;
+}
+
+.dash-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px;
+  align-items: center; position: relative; z-index: 1;
+}
+
+.dash-content .section-tag { color: #90b4f0; }
+.dash-content .section-tag::before { background: #90b4f0; }
+
+.dash-features { margin-top: 32px; display: flex; flex-direction: column; gap: 0; }
+.dash-feat {
+  display: flex; gap: 14px; padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.dash-feat:last-child { border-bottom: none; }
+.dash-feat-num {
+  font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+  color: rgba(0,71,187,0.6); flex-shrink: 0; width: 32px; line-height: 1.1;
+}
+.dash-feat-body strong { display: block; font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+.dash-feat-body span { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; font-weight: 300; }
+
+/* Dashboard UI mock — detailed */
+.dash-ui {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+}
+.dui-bar {
+  background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 12px 18px; display: flex; align-items: center; justify-content: space-between;
+}
+.dui-bar-left { display: flex; align-items: center; gap: 8px; }
+.dui-bar-dot { width: 8px; height: 8px; border-radius: 50%; }
+.dui-bar-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); margin-left: 4px; }
+.dui-url {
+  font-size: 11px; color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px; padding: 4px 10px;
+}
+
+.dui-kpis {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.dui-kpi {
+  padding: 16px 16px; border-right: 1px solid rgba(255,255,255,0.07); text-align: center;
+}
+.dui-kpi:last-child { border-right: none; }
+.dui-kpi-n {
+  font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+  color: var(--white); line-height: 1; letter-spacing: -0.02em;
+}
+.dui-kpi-n em { color: #60a5fa; font-style: normal; }
+.dui-kpi-l { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.dui-table { padding: 12px; }
+.dui-table-head {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 6px 10px; margin-bottom: 4px;
+}
+.dui-table-head span { font-size: 10px; color: rgba(255,255,255,0.2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+.dui-row {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 7px; padding: 10px 10px; margin-bottom: 6px;
+  align-items: center;
+}
+.dui-row:last-child { margin-bottom: 0; }
+.dui-row-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.7); }
+.dui-row-val { font-size: 12px; color: rgba(255,255,255,0.4); }
+.dui-row-stock { font-size: 12px; font-weight: 600; }
+.dui-row-stock.ok { color: #4ade80; }
+.dui-row-stock.low { color: #fbbf24; }
+.dui-status {
+  font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+  display: inline-block;
+}
+.dui-status.avail { background: rgba(74,222,128,0.15); color: #4ade80; }
+.dui-status.low   { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+.dui-send-btn {
+  margin: 12px; padding: 10px;
+  background: var(--blue); border-radius: 8px;
+  text-align: center; font-size: 13px; font-weight: 600; color: var(--white);
+  cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 7px;
+}
+.dui-send-btn:hover { background: var(--blue-hover); }
+
+/* ── CASES ── */
+.cases-section { background: var(--bg); }
+
+.cases-split {
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; margin-top: 48px;
+}
+
+.case-main {
+  background: var(--ink-dark); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px; overflow: hidden;
+}
+.case-main-header {
+  padding: 32px 32px 0;
+}
+.case-tag-chip {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 3px 10px; border-radius: 4px; margin-bottom: 14px;
+  background: rgba(0,71,187,0.3); color: #90b4f0;
+}
+.case-client {
+  font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700;
+  color: var(--white); letter-spacing: -0.02em; line-height: 1; margin-bottom: 4px;
+}
+.case-event { font-size: 13px; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+.case-metric {
+  font-family: 'Playfair Display', serif; font-size: 68px; font-weight: 700;
+  color: var(--blue); line-height: 1; letter-spacing: -0.03em; margin-bottom: 4px;
+}
+.case-metric-label { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+
+.case-main-body {
+  padding: 20px 32px 28px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.case-main-desc { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.65; font-weight: 300; }
+
+.case-details { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.case-detail {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px; padding: 11px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.case-detail-icon { font-size: 14px; flex-shrink: 0; }
+.case-detail-text { font-size: 12px; color: rgba(255,255,255,0.45); }
+.case-detail-text strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+.case-secondary { display: flex; flex-direction: column; gap: 20px; }
+
+.case-card-sm {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 28px; flex: 1;
+  transition: all 0.2s;
+}
+.case-card-sm:hover { border-color: var(--blue); box-shadow: 0 8px 32px rgba(0,71,187,0.08); transform: translateY(-2px); }
+.case-tag-sm {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 3px 9px; border-radius: 4px; display: inline-block; margin-bottom: 12px;
+  background: var(--blue-subtle); color: var(--blue);
+}
+.case-client-sm {
+  font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.02em; margin-bottom: 3px;
+}
+.case-event-sm { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+.case-metric-sm {
+  font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700;
+  color: var(--blue); line-height: 1; letter-spacing: -0.03em; margin-bottom: 4px;
+}
+.case-metric-label-sm { font-size: 13px; color: var(--body); margin-bottom: 16px; }
+.case-divider { height: 1px; background: var(--border); margin-bottom: 14px; }
+.case-desc-sm { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; }
+
+/* ── PRICING / OFFER ── */
+.offer-section { background: var(--white); }
+
+.offer-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+
+.offer-card {
+  background: var(--ink-dark); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; overflow: hidden;
+}
+.offer-card-header {
+  padding: 32px 32px 24px; border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.offer-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,71,187,0.25); border: 1px solid rgba(0,71,187,0.4);
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 11px; font-weight: 700; color: #90b4f0; margin-bottom: 16px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.offer-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: #90b4f0; }
+.offer-card-header h3 {
+  font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+  color: var(--white); letter-spacing: -0.01em; margin-bottom: 8px;
+}
+.offer-card-header p { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.6; font-weight: 300; }
+
+.offer-card-body { padding: 24px 32px; }
+.offer-items { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.offer-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: rgba(255,255,255,0.6);
+}
+.offer-check {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(0,71,187,0.3); border: 1px solid rgba(0,71,187,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: #90b4f0; font-weight: 700; margin-top: 1px;
+}
+
+.offer-cta {
+  display: block; width: 100%; background: var(--blue); color: var(--white);
+  padding: 13px; border-radius: 8px; text-align: center;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  transition: all 0.15s; border: none; cursor: pointer;
+}
+.offer-cta:hover { background: var(--blue-hover); box-shadow: 0 6px 20px rgba(0,71,187,0.35); }
+
+.offer-fine { text-align: center; font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 10px; }
+
+/* Offer right — bullets */
+.offer-right { padding-top: 8px; }
+.offer-why-list { list-style: none; display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+.offer-why {
+  display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border);
+}
+.offer-why:first-child { padding-top: 0; }
+.offer-why:last-child { border-bottom: none; }
+.offer-why-icon {
+  width: 40px; height: 40px; border-radius: 9px; flex-shrink: 0;
+  background: var(--blue-subtle); display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.offer-why-body h4 { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+.offer-why-body p { font-size: 14px; color: var(--body); line-height: 1.6; font-weight: 300; }
+
+/* ── CTA / FORM ── */
+.cta-section { background: var(--bg); }
+
+.cta-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.cta-content h2 { margin-bottom: 14px; }
+.cta-content .section-lead { margin-bottom: 32px; }
+
+.cta-points { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+.cta-point {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--body);
+}
+.cp-check {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue-subtle); border: 1px solid var(--blue-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--blue); font-weight: 700;
+}
+
+.form-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 36px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+}
+.form-card h3 {
+  font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.01em; margin-bottom: 4px;
+}
+.form-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { margin-bottom: 13px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 10px 13px;
+  border: 1.5px solid var(--border); border-radius: 7px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink);
+  background: var(--white); outline: none; appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,71,187,0.1);
+}
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted); }
+.form-group textarea { resize: none; height: 72px; }
+.form-submit {
+  width: 100%; background: var(--blue); color: var(--white);
+  border: none; padding: 13px; border-radius: 8px;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: all 0.15s; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+}
+.form-submit:hover { background: var(--blue-hover); box-shadow: 0 6px 20px rgba(0,71,187,0.35); transform: translateY(-1px); }
+.form-disclaimer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 11px; }
+.form-success { display: none; text-align: center; padding: 28px 0; }
+.form-success .fs-ico { font-size: 44px; margin-bottom: 14px; }
+.form-success h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); margin-bottom: 8px; }
+.form-success p { font-size: 14px; color: var(--body); line-height: 1.6; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--white); border-top: 1px solid var(--border);
+  padding: 24px 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.footer-brand { font-size: 14px; font-weight: 700; color: var(--ink); }
+.footer-brand span { color: var(--blue); }
+.footer-copy { font-size: 12px; color: var(--muted); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: var(--ink); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; }
+.d3 { transition-delay: 0.24s; } .d4 { transition-delay: 0.32s; }
+
+/* ── RESPONSIVE ── */
+@media(max-width: 1024px) {
+  .hero-inner, .problem-layout, .how-header, .dash-layout,
+  .offer-layout, .cta-layout { grid-template-columns: 1fr; gap: 40px; }
+  .hero-right { display: none; }
+  .steps-row { grid-template-columns: 1fr 1fr; }
+  .cases-split { grid-template-columns: 1fr; }
+  .case-secondary { flex-direction: row; }
+  section { padding: 64px 28px; }
+  nav { padding: 0 24px; }
+}
+@media(max-width: 640px) {
+  .steps-row { grid-template-columns: 1fr; border-radius: 12px; }
+  .step-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .step-card:last-child { border-bottom: none; }
+  .step-arrow { display: none; }
+  .case-secondary { flex-direction: column; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; text-align: center; }
+  section { padding: 48px 16px; }
+  nav { padding: 0 16px; }
+  .nav-page { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/" class="nav-back">← Início</a>
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 16 16" fill="none">
+        <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white" opacity="0.9"/>
+        <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity="0.6"/>
+        <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity="0.6"/>
+        <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white" opacity="0.9"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">Grupo <span>T&M</span></span>
+  </a>
+  <div class="nav-sep"></div>
+  <span class="nav-page">Armazenamento & Envio</span>
+  <div class="nav-spacer"></div>
+  <a href="#contato" class="nav-cta">Agendar demonstração →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-breadcrumb reveal">
+        Grupo T&M <span class="hero-breadcrumb-sep">/</span> Soluções <span class="hero-breadcrumb-sep">/</span> Armazenamento & Envio
+      </div>
+      <h1 class="reveal d1">
+        Seu escritório não é<br>
+        <em>depósito de caixa.</em>
+      </h1>
+      <p class="hero-sub reveal d2">
+        Seus uniformes e brindes ficam no nosso CD em Brusque, SC. Você acessa o painel, seleciona o produto e o endereço, confirma — a T&M embala e despacha. Rastreio em tempo real, DRE no fim do mês.
+      </p>
+      <div class="hero-actions reveal d3">
+        <a href="#contato" class="btn-primary">Agendar demonstração →</a>
+        <a href="#como-funciona" class="btn-secondary">Ver como funciona</a>
+      </div>
+      <div class="hero-trust reveal d4">
+        <span class="trust-label">Usado por</span>
+        <div class="trust-logos">
+          <span class="trust-logo">QuintoAndar</span>
+          <span class="trust-logo">Rede Fleming</span>
+          <span class="trust-logo">Wizard</span>
+          <span class="trust-logo">Farmácia São João</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard mock -->
+    <div class="hero-right reveal d2">
+      <div class="hero-panel">
+        <div class="hp-inner">
+          <div class="hp-topbar">
+            <div class="hp-topbar-left">
+              <div class="hp-topbar-dot"></div>
+              <span class="hp-topbar-name">envios.temgrupo.com.br</span>
+            </div>
+            <span class="hp-live"><span class="hp-live-dot"></span>Ao vivo</span>
+          </div>
+
+          <div class="hp-stats">
+            <div class="hp-stat">
+              <div class="hp-stat-n">2<em>.847</em></div>
+              <div class="hp-stat-l">Peças em estoque</div>
+            </div>
+            <div class="hp-stat">
+              <div class="hp-stat-n">156</div>
+              <div class="hp-stat-l">Em trânsito</div>
+            </div>
+            <div class="hp-stat">
+              <div class="hp-stat-n">12<em>k</em></div>
+              <div class="hp-stat-l">Entregas feitas</div>
+            </div>
+          </div>
+
+          <div class="hp-order-list">
+            <div class="hp-order">
+              <div class="hp-order-icon">📦</div>
+              <div class="hp-order-info">
+                <div class="hp-order-name">Kit Onboarding — Ana Souza</div>
+                <div class="hp-order-dest">📍 São Paulo, SP</div>
+              </div>
+              <span class="hp-order-status s-prep">Separando</span>
+            </div>
+            <div class="hp-order">
+              <div class="hp-order-icon">🧢</div>
+              <div class="hp-order-info">
+                <div class="hp-order-name">Boné + Camiseta — Rafael Lima</div>
+                <div class="hp-order-dest">📍 Recife, PE</div>
+              </div>
+              <span class="hp-order-status s-go">Em trânsito</span>
+            </div>
+            <div class="hp-order">
+              <div class="hp-order-icon">👔</div>
+              <div class="hp-order-info">
+                <div class="hp-order-name">Uniforme P — Camila Rocha</div>
+                <div class="hp-order-dest">📍 Belo Horizonte, MG</div>
+              </div>
+              <span class="hp-order-status s-ok">Entregue ✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOS -->
+<div class="logos-bar">
+  <div class="logos-inner">
+    <span class="logos-label">Usado por</span>
+    <div class="logos-divider"></div>
+    <div class="logos-row">
+      <span class="logos-client">QuintoAndar</span>
+      <span class="logos-client">Rede Fleming</span>
+      <span class="logos-client">Wizard</span>
+      <span class="logos-client">Farmácia São João</span>
+      <span class="logos-client">Booyah</span>
+      <span class="logos-client">Cora</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEMA -->
+<section class="problem-section">
+  <div class="container">
+    <div class="problem-layout">
+      <div class="problem-left reveal">
+        <div class="section-tag">O problema real</div>
+        <h2 class="sh">Você está gerenciando<br>uma <em>operação logística</em><br>sem saber.</h2>
+        <p class="section-lead" style="margin-top:12px;max-width:460px">RH não foi contratado para controlar estoque, negociar frete e lembrar de rechear caixinha de isopor. Mas é isso que acontece quando o produto fica no escritório.</p>
+
+        <div class="problem-cards">
+          <div class="prob-card">
+            <div class="prob-icon">📦</div>
+            <div class="prob-body">
+              <h4>A sala virou depósito</h4>
+              <p>Caixas de uniforme empilhadas até o teto, colaboradores pedindo tamanhos que você não sabe se tem, espaço valioso consumido por estoque.</p>
+            </div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-icon">🚚</div>
+            <div class="prob-body">
+              <h4>Frete é um caos</h4>
+              <p>Cotação manual em Correios, Jadlog e transportadora a cada envio. Às vezes alguém paga no cartão pessoal e pede reembolso depois.</p>
+            </div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-icon">📊</div>
+            <div class="prob-body">
+              <h4>Sem visibilidade de estoque</h4>
+              <p>Quanto tem de camiseta G? Cadê o kit do novo colaborador que entrou semana passada? A resposta está numa planilha desatualizada — ou em ninguém.</p>
+            </div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-icon">⏳</div>
+            <div class="prob-body">
+              <h4>Processo manual e lento</h4>
+              <p>Cada envio exige pelo menos 20 minutos de trabalho. Multiplique por 50 colaboradores remotos por mês e você entende o problema.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Before / After card -->
+      <div class="reveal d1" style="padding-top: 8px;">
+        <div class="ba-card" id="baCard">
+          <div class="ba-header">
+            <div class="ba-tab active" id="tabBefore" onclick="switchTab('before')">😰 Sem a T&M</div>
+            <div class="ba-tab" id="tabAfter" onclick="switchTab('after')">✅ Com a T&M</div>
+          </div>
+
+          <div class="ba-body" id="baBody">
+            <div class="ba-rows" id="baRows">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+          <div class="ba-footer bad" id="baFooter">
+            <div class="ba-footer-icon">⚠️</div>
+            <div class="ba-footer-text">
+              <strong>Resultado</strong>
+              Kit do novo colaborador chegou com 2 semanas de atraso. Primeira impressão destruída.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="how-section" id="como-funciona">
+  <div class="container">
+    <div class="how-header">
+      <div class="reveal">
+        <div class="section-tag">Como funciona</div>
+        <h2 class="sh">Quatro etapas.<br><em>Zero complicação.</em></h2>
+      </div>
+      <p class="section-lead reveal d1" style="max-width:400px">O processo foi desenhado para que você não precise pensar em logística. Você pede — a gente resolve.</p>
+    </div>
+
+    <div class="steps-row reveal">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">🏭</div>
+        <h4>Produção & Entrada no CD</h4>
+        <p>A T&M produz ou recebe seus produtos e dá entrada no nosso Centro de Distribuição em Brusque, SC. Cada SKU catalogado e fotografado.</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">📱</div>
+        <h4>Você acessa o painel</h4>
+        <p>Login em envios.temgrupo.com.br. Visualiza o estoque em tempo real, histórico de pedidos e status de cada entrega ativa.</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">✅</div>
+        <h4>Seleciona e confirma</h4>
+        <p>Escolhe o produto, informa o destinatário e confirma. Envio individual ou em lote via planilha. Menos de 2 minutos por pedido.</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon">📬</div>
+        <h4>A T&M despacha</h4>
+        <p>Embalagem personalizada, nota fiscal, código de rastreio automático por e-mail para o destinatário. DRE mensal com custo por envio.</p>
+        <div class="step-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="how-note reveal d1">
+      <span class="how-note-icon">⚡</span>
+      <div class="how-note-text">
+        <strong>Pedidos feitos até as 14h são despachados no mesmo dia útil.</strong>
+        <span>Colaborador em São Paulo pede de manhã, produto saindo do CD à tarde — chegando em 1-3 dias úteis na maioria das capitais.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="dash-section">
+  <div class="container">
+    <div class="dash-layout">
+      <div class="dash-content reveal">
+        <div class="section-tag">T&M Envios — Plataforma</div>
+        <h2 class="sh white">Controle total.<br>Sem <em>planilha.</em></h2>
+        <p class="section-lead white" style="margin-top:12px;max-width:420px">Uma plataforma construída para gestores que precisam de visibilidade sem complexidade. Do estoque ao custo, tudo em uma tela.</p>
+
+        <div class="dash-features">
+          <div class="dash-feat">
+            <div class="dash-feat-num">01</div>
+            <div class="dash-feat-body">
+              <strong>Inventário em tempo real</strong>
+              <span>Visualize cada SKU, tamanho e quantidade disponível. Alertas automáticos de estoque baixo antes de você precisar recomprar.</span>
+            </div>
+          </div>
+          <div class="dash-feat">
+            <div class="dash-feat-num">02</div>
+            <div class="dash-feat-body">
+              <strong>Envio em 2 minutos</strong>
+              <span>Individual por formulário ou em lote por planilha. Rastreio gerado automaticamente e enviado ao destinatário por e-mail.</span>
+            </div>
+          </div>
+          <div class="dash-feat">
+            <div class="dash-feat-num">03</div>
+            <div class="dash-feat-body">
+              <strong>Relatório de custo por campanha</strong>
+              <span>Filtre gastos com frete por departamento, centro de custo ou campanha. DRE mensal pronto para o financeiro.</span>
+            </div>
+          </div>
+          <div class="dash-feat">
+            <div class="dash-feat-num">04</div>
+            <div class="dash-feat-body">
+              <strong>Multi-usuário com permissões</strong>
+              <span>Cada área da empresa solicita seus envios diretamente. Aprovação centralizada pelo gestor ou autonomia por departamento.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard UI -->
+      <div class="dash-ui reveal d1">
+        <div class="dui-bar">
+          <div class="dui-bar-left">
+            <div class="dui-bar-dot" style="background:#ff5f57"></div>
+            <div class="dui-bar-dot" style="background:#febc2e;margin-left:4px"></div>
+            <div class="dui-bar-dot" style="background:#28c840;margin-left:4px"></div>
+            <span class="dui-bar-title">T&M Envios — Dashboard</span>
+          </div>
+          <span class="dui-url">envios.temgrupo.com.br</span>
+        </div>
+
+        <div class="dui-kpis">
+          <div class="dui-kpi">
+            <div class="dui-kpi-n">2<em>.847</em></div>
+            <div class="dui-kpi-l">Em estoque</div>
+          </div>
+          <div class="dui-kpi">
+            <div class="dui-kpi-n">156</div>
+            <div class="dui-kpi-l">Em trânsito</div>
+          </div>
+          <div class="dui-kpi">
+            <div class="dui-kpi-n">R$<em>4,2k</em></div>
+            <div class="dui-kpi-l">Frete este mês</div>
+          </div>
+        </div>
+
+        <div class="dui-table">
+          <div class="dui-table-head">
+            <span>Produto</span>
+            <span>SKU</span>
+            <span>Estoque</span>
+            <span>Status</span>
+          </div>
+          <div class="dui-row">
+            <span class="dui-row-name">Camiseta Polo — P</span>
+            <span class="dui-row-val">CPO-P</span>
+            <span class="dui-row-stock ok">847</span>
+            <span class="dui-status avail">Disponível</span>
+          </div>
+          <div class="dui-row">
+            <span class="dui-row-name">Kit Onboarding</span>
+            <span class="dui-row-val">KIT-ON</span>
+            <span class="dui-row-stock ok">312</span>
+            <span class="dui-status avail">Disponível</span>
+          </div>
+          <div class="dui-row">
+            <span class="dui-row-name">Boné Corporativo — G</span>
+            <span class="dui-row-val">BON-G</span>
+            <span class="dui-row-stock low">14</span>
+            <span class="dui-status low">Estoque baixo</span>
+          </div>
+          <div class="dui-row">
+            <span class="dui-row-name">Jaqueta Staff — M</span>
+            <span class="dui-row-val">JAQ-M</span>
+            <span class="dui-row-stock ok">203</span>
+            <span class="dui-status avail">Disponível</span>
+          </div>
+        </div>
+
+        <div class="dui-send-btn">
+          ＋ Novo envio →
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases-section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag">Cases reais</div>
+      <h2 class="sh">Quem já parou de<br>gerenciar <em>caixa.</em></h2>
+    </div>
+
+    <div class="cases-split">
+      <div class="case-main reveal d1">
+        <div class="case-main-header">
+          <span class="case-tag-chip">Fulfillment corporativo</span>
+          <div class="case-client">QuintoAndar</div>
+          <div class="case-event">Equipe remota distribuída pelo Brasil</div>
+          <div class="case-metric">800+</div>
+          <div class="case-metric-label">envios para colaboradores remotos</div>
+        </div>
+        <div class="case-main-body">
+          <div class="case-main-desc">O QuintoAndar precisava enviar kits de boas-vindas e uniformes para uma equipe distribuída em todo o Brasil — sem manter estoque no escritório, sem sobrecarregar o RH com logística manual.</div>
+          <div class="case-details">
+            <div class="case-detail">
+              <span class="case-detail-icon">🏢</span>
+              <div class="case-detail-text"><strong>Armazenagem centralizada</strong> no CD T&M, zero caixa no escritório</div>
+            </div>
+            <div class="case-detail">
+              <span class="case-detail-icon">📱</span>
+              <div class="case-detail-text"><strong>Painel de envios</strong> acessado pelo RH, sem intermediação</div>
+            </div>
+            <div class="case-detail">
+              <span class="case-detail-icon">📬</span>
+              <div class="case-detail-text"><strong>Rastreio automático</strong> enviado ao colaborador por e-mail</div>
+            </div>
+            <div class="case-detail">
+              <span class="case-detail-icon">📊</span>
+              <div class="case-detail-text"><strong>DRE mensal</strong> com custo por envio entregue ao financeiro</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-secondary">
+        <div class="case-card-sm reveal d2">
+          <span class="case-tag-sm">Rede de franquias</span>
+          <div class="case-client-sm">Rede Fleming</div>
+          <div class="case-event-sm">17 unidades · uniformes e materiais</div>
+          <div class="case-metric-sm">17×</div>
+          <div class="case-metric-label-sm">unidades abastecidas por um único painel</div>
+          <div class="case-divider"></div>
+          <div class="case-desc-sm">17 unidades solicitam uniformes de forma autônoma. A matriz visualiza tudo, aprova e o CD despacha. Sem e-mail, sem planilha, sem confusão.</div>
+        </div>
+
+        <div class="case-card-sm reveal d3">
+          <span class="case-tag-sm">Educação</span>
+          <div class="case-client-sm">Wizard</div>
+          <div class="case-event-sm">Rede nacional de franquias</div>
+          <div class="case-metric-sm">∞</div>
+          <div class="case-metric-label-sm">reposição contínua sem atrito</div>
+          <div class="case-divider"></div>
+          <div class="case-desc-sm">Franqueados Wizard pedem uniformes diretamente pela plataforma. Controle de grade por unidade, histórico de pedidos e reposição automática quando estoque cai abaixo do mínimo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section class="offer-section">
+  <div class="container">
+    <div class="offer-layout">
+      <div class="offer-card reveal">
+        <div class="offer-card-header">
+          <div class="offer-badge"><span class="offer-badge-dot"></span>Oferta de entrada</div>
+          <h3>6 meses de armazenagem gratuita para novos clientes</h3>
+          <p>Você produz com a T&M e os primeiros 6 meses de armazenagem no nosso CD são por nossa conta. Zero custo para começar a operar.</p>
+        </div>
+        <div class="offer-card-body">
+          <ul class="offer-items">
+            <li class="offer-item"><span class="offer-check">✓</span>Entrada do estoque no CD sem custo de setup</li>
+            <li class="offer-item"><span class="offer-check">✓</span>Acesso ao painel T&M Envios incluso</li>
+            <li class="offer-item"><span class="offer-check">✓</span>Catalogação fotográfica de todos os SKUs</li>
+            <li class="offer-item"><span class="offer-check">✓</span>Treinamento da equipe no sistema (1h)</li>
+            <li class="offer-item"><span class="offer-check">✓</span>Suporte via WhatsApp com SLA de resposta</li>
+            <li class="offer-item"><span class="offer-check">✓</span>DRE mensal com custo detalhado por envio</li>
+          </ul>
+          <a href="#contato" class="offer-cta">Quero os 6 meses grátis →</a>
+          <p class="offer-fine">Oferta válida para novos clientes com produção mínima de R$ 5.000.</p>
+        </div>
+      </div>
+
+      <div class="offer-right reveal d1">
+        <div class="section-tag">Por que a T&M</div>
+        <h2 class="sh">Não é só guardar.<br><em>É operar.</em></h2>
+        <p class="section-lead" style="max-width:420px;margin-top:8px">Qualquer galpão guarda caixa. A T&M integra produção, estoque e logística numa operação única — porque a gente fez o produto e sabe o que tem dentro.</p>
+
+        <ul class="offer-why-list">
+          <li class="offer-why">
+            <div class="offer-why-icon">🏭</div>
+            <div class="offer-why-body">
+              <h4>Produção própria + CD integrado</h4>
+              <p>O produto sai da nossa confecção e vai direto para o CD — sem transit, sem recontagem, sem perda de tempo.</p>
+            </div>
+          </li>
+          <li class="offer-why">
+            <div class="offer-why-icon">📦</div>
+            <div class="offer-why-body">
+              <h4>Embalagem personalizada inclusa</h4>
+              <p>Cada envio sai com a identidade da sua marca — caixa, papel de seda, card de boas-vindas. Experiência de unboxing do jeito certo.</p>
+            </div>
+          </li>
+          <li class="offer-why">
+            <div class="offer-why-icon">📊</div>
+            <div class="offer-why-body">
+              <h4>Visibilidade financeira real</h4>
+              <p>Custo de frete por departamento, campanha ou colaborador. Sem surpresa no cartão da empresa no fim do mês.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / FORM -->
+<section class="cta-section" id="contato">
+  <div class="container">
+    <div class="cta-layout">
+      <div class="cta-content reveal">
+        <div class="section-tag">Vamos começar</div>
+        <h2 class="sh">Esvazie a sala.<br><em>A gente cuida do resto.</em></h2>
+        <p class="section-lead" style="max-width:420px">Fale com um especialista T&M e veja como tirar o estoque do seu escritório em menos de 30 dias.</p>
+
+        <ul class="cta-points">
+          <li class="cta-point"><span class="cp-check">✓</span>Diagnóstico gratuito da sua operação atual</li>
+          <li class="cta-point"><span class="cp-check">✓</span>Demo do painel T&M Envios em 30 minutos</li>
+          <li class="cta-point"><span class="cp-check">✓</span>6 meses de armazenagem grátis para novos clientes</li>
+          <li class="cta-point"><span class="cp-check">✓</span>Proposta personalizada em até 24h</li>
+        </ul>
+      </div>
+
+      <div class="reveal d1">
+        <div class="form-card">
+          <div id="formContent">
+            <h3>Agendar demonstração</h3>
+            <p class="form-sub">Mostramos o painel ao vivo. Sem compromisso.</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nome</label>
+                <input type="text" id="nome" placeholder="Seu nome" />
+              </div>
+              <div class="form-group">
+                <label>Empresa</label>
+                <input type="text" id="empresa" placeholder="Sua empresa" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>E-mail</label>
+              <input type="email" id="email" placeholder="voce@empresa.com.br" />
+            </div>
+            <div class="form-group">
+              <label>WhatsApp</label>
+              <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nº de colaboradores</label>
+                <select id="colabs">
+                  <option value="">Selecione</option>
+                  <option>Até 50</option>
+                  <option>50 – 200</option>
+                  <option>200 – 500</option>
+                  <option>Mais de 500</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Frequência de envios</label>
+                <select id="frequencia">
+                  <option value="">Selecione</option>
+                  <option>Pontual (campanhas)</option>
+                  <option>Mensal</option>
+                  <option>Semanal</option>
+                  <option>Diário</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="form-submit" onclick="submitForm()">
+              Quero agendar a demonstração →
+            </button>
+            <p class="form-disclaimer">🔒 Sem spam. Um especialista entra em contato em até 24h úteis.</p>
+          </div>
+
+          <div class="form-success" id="formSuccess">
+            <div class="fs-ico">✅</div>
+            <h3>Demo agendada!</h3>
+            <p>Um especialista T&M vai entrar em contato em até 24 horas para confirmar o horário e enviar o link da demonstração.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Grupo <span>T&M</span></div>
+  <span class="footer-copy">© 2026 Grupo T&M · Brusque, SC</span>
+  <div class="footer-links">
+    <a href="/">Início</a>
+    <a href="/operacao-eventos">Operação em Eventos</a>
+    <a href="https://instagram.com/temgrupo">@temgrupo</a>
+    <a href="https://envios.temgrupo.com.br">T&M Envios</a>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+
+// Reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 60);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Before/after toggle
+const states = {
+  before: {
+    rows: [
+      { icon:'📧', name:'Pedido de uniforme — Lucas M.', detail:'Enviou e-mail ao RH às 9h', pill:'pill-warn', status:'Aguardando 3 dias' },
+      { icon:'📦', name:'Estoque de camiseta G', detail:'Última contagem: semana passada', pill:'pill-bad', status:'Desconhecido' },
+      { icon:'🚚', name:'Frete para Porto Alegre', detail:'Cotação manual em 3 transportadoras', pill:'pill-bad', status:'2h de trabalho' },
+      { icon:'💳', name:'Nota fiscal do frete', detail:'Pago no cartão pessoal de Ana', pill:'pill-bad', status:'Reembolso pend.' },
+    ],
+    footer: { cls:'bad', icon:'⚠️', title:'Resultado', text:'Kit do novo colaborador chegou com 2 semanas de atraso. Primeira impressão destruída.' }
+  },
+  after: {
+    rows: [
+      { icon:'📱', name:'Pedido de uniforme — Lucas M.', detail:'Aberto no painel às 9h14', pill:'pill-ok', status:'Despachado 14h' },
+      { icon:'📊', name:'Estoque de camiseta G', detail:'Atualizado em tempo real', pill:'pill-ok', status:'312 unidades' },
+      { icon:'🚚', name:'Frete para Porto Alegre', detail:'Automático — melhor tarifa selecionada', pill:'pill-ok', status:'R$ 18,90' },
+      { icon:'📬', name:'Rastreio enviado ao colaborador', detail:'E-mail automático ao destinatário', pill:'pill-ok', status:'Entregue ✓' },
+    ],
+    footer: { cls:'good', icon:'✅', title:'Resultado', text:'Kit entregue em 2 dias. Colaborador rastreou sozinho. RH não tocou no assunto.' }
+  }
+};
+
+let current = 'before';
+
+function switchTab(tab) {
+  current = tab;
+  const s = states[tab];
+  const isBefore = tab === 'before';
+
+  document.getElementById('tabBefore').className = 'ba-tab' + (isBefore ? ' active' : '');
+  document.getElementById('tabAfter').className  = 'ba-tab' + (!isBefore ? ' active green' : '');
+
+  const rows = document.getElementById('baRows');
+  rows.innerHTML = s.rows.map(r => `
+    <div class="ba-row">
+      <div class="ba-row-icon">${r.icon}</div>
+      <div class="ba-row-text">
+        <strong>${r.name}</strong>
+        <span>${r.detail}</span>
+      </div>
+      <span class="ba-pill ${r.pill}">${r.status}</span>
+    </div>
+  `).join('');
+
+  const f = s.footer;
+  const footer = document.getElementById('baFooter');
+  footer.className = `ba-footer ${f.cls}`;
+  footer.innerHTML = `<div class="ba-footer-icon">${f.icon}</div><div class="ba-footer-text"><strong>${f.title}</strong>${f.text}</div>`;
+}
+
+// Init
+switchTab('before');
+
+// Whatsapp mask
+document.getElementById('whatsapp').addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g,'');
+  v = v.replace(/^(\d{2})(\d)/,'($1) $2');
+  v = v.replace(/(\d)(\d{4})$/,'$1-$2');
+  e.target.value = v;
+});
+
+// Form
+function submitForm() {
+  const req = ['nome','empresa','email','whatsapp','colabs','frequencia'];
+  if (req.some(id => !document.getElementById(id).value.trim())) {
+    alert('Por favor, preencha todos os campos.'); return;
+  }
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>

@@ -37,19 +37,41 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   padding: 0 48px; height: 62px;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgba(12,15,26,0.88);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  transition: background 0.3s;
+  transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+  border-bottom: 1px solid transparent;
 }
-nav.scrolled { background: rgba(12,15,26,0.98); }
+
+/* Topo da página: transparente, texto escuro */
+nav.at-top {
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+}
+nav.at-top .logo-tm        { color: var(--ink-dark); }
+nav.at-top .logo-tm span   { color: var(--blue); }
+nav.at-top .logo-grupo     { color: var(--muted); }
+nav.at-top .nav-links a    { color: var(--body); }
+nav.at-top .nav-links a:hover { color: var(--ink-dark); }
+
+/* Após scroll: glass escuro, texto claro */
+nav.scrolled {
+  background: rgba(12,15,26,0.92);
+  border-color: rgba(255,255,255,0.06);
+  backdrop-filter: blur(16px);
+}
+nav.scrolled .logo-tm        { color: var(--white); }
+nav.scrolled .logo-tm span   { color: var(--blue); }
+nav.scrolled .logo-grupo     { color: rgba(255,255,255,0.3); }
+nav.scrolled .nav-links a    { color: rgba(255,255,255,0.5); }
+nav.scrolled .nav-links a:hover { color: var(--white); }
+
 .nav-logo { display: flex; align-items: baseline; gap: 5px; text-decoration: none; }
-.logo-tm { font-size: 19px; font-weight: 800; color: var(--white); letter-spacing: -0.02em; }
-.logo-tm span { color: var(--blue); }
-.logo-grupo { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; }
+.logo-tm { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; transition: color 0.4s; }
+.logo-tm span { transition: color 0.4s; }
+.logo-grupo { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.4s; }
+
 .nav-links { display: flex; gap: 28px; align-items: center; }
-.nav-links a { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover { color: var(--white); }
+.nav-links a { font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.4s; }
 .nav-cta {
   background: var(--blue); color: var(--white) !important;
   padding: 9px 20px; border-radius: 6px;
@@ -105,10 +127,10 @@ nav.scrolled { background: rgba(12,15,26,0.98); }
 
 .hero-stats { display: flex; gap: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
 .stat-num { font-size: 28px; font-weight: 800; color: var(--ink-dark); line-height: 1; letter-spacing: -0.02em; }
-.stat-num span { color: var(--blue); }
+.stat-num .suffix { color: var(--blue); }
 .stat-label { font-size: 12px; color: var(--muted); font-weight: 400; margin-top: 4px; }
 
-/* Hero visual */
+/* Hero visual — painel dashboard */
 .hero-visual { position: relative; }
 .hero-panel {
   background: var(--bg); border: 1px solid var(--border);
@@ -124,12 +146,11 @@ nav.scrolled { background: rgba(12,15,26,0.98); }
 .pcard { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
 .pcard-label { font-size: 11px; color: var(--muted); font-weight: 500; margin-bottom: 5px; }
 .pcard-value { font-size: 24px; font-weight: 800; color: var(--ink-dark); letter-spacing: -0.03em; line-height: 1; }
-.pcard-value span { color: var(--blue); }
+.pcard-value .suffix { color: var(--blue); }
 .pcard-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
 .pcard.accent { background: var(--blue); border-color: var(--blue); }
 .pcard.accent .pcard-label { color: rgba(255,255,255,0.6); }
 .pcard.accent .pcard-value { color: var(--white); }
-.pcard.accent .pcard-value span { color: rgba(255,255,255,0.7); }
 .pcard.accent .pcard-sub { color: rgba(255,255,255,0.55); }
 .panel-row {
   display: flex; align-items: center; justify-content: space-between;
@@ -160,9 +181,17 @@ nav.scrolled { background: rgba(12,15,26,0.98); }
 }
 .logos-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; flex-shrink: 0; }
 .logos-divider { width: 1px; height: 20px; background: var(--border-mid); flex-shrink: 0; }
-.logos-scroll { display: flex; gap: 40px; align-items: center; flex: 1; flex-wrap: wrap; }
-.client-logo { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: 0.02em; transition: color 0.2s; white-space: nowrap; }
-.client-logo:hover { color: var(--ink); }
+.logos-scroll { display: flex; gap: 48px; align-items: center; flex: 1; flex-wrap: wrap; }
+
+/* Logo slot: mostra img se src preenchido, texto caso contrário */
+.logo-slot { display: flex; align-items: center; height: 28px; }
+.logo-img { height: 28px; width: auto; object-fit: contain; filter: grayscale(1) opacity(0.4); transition: filter 0.2s; }
+.logo-img[src=""] { display: none; }
+.logo-img:not([src=""])+.logo-text { display: none; }
+.logo-img[src=""]+.logo-text { display: block; }
+.logo-text { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: 0.02em; white-space: nowrap; transition: color 0.2s; }
+.logo-slot:hover .logo-img { filter: grayscale(1) opacity(0.7); }
+.logo-slot:hover .logo-text { color: var(--ink); }
 
 /* ── SECTIONS ── */
 section { padding: 96px 48px; }
@@ -183,7 +212,6 @@ h2.section-title {
 h2.section-title em { font-style: italic; color: var(--blue); }
 h2.section-title.white { color: var(--white); }
 h2.section-title.white em { color: rgba(120,170,255,0.9); }
-
 .section-sub { font-size: 16px; color: var(--body); line-height: 1.65; font-weight: 300; max-width: 500px; }
 .section-sub.light { color: rgba(255,255,255,0.5); }
 
@@ -193,7 +221,23 @@ h2.section-title.white em { color: rgba(120,170,255,0.9); }
 .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .prod-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: all 0.25s; }
 .prod-card:hover { border-color: var(--blue); box-shadow: 0 12px 40px rgba(0,71,187,0.1); transform: translateY(-3px); }
-.prod-card-visual { height: 176px; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; font-size: 64px; }
+
+/* Área de foto do produto */
+.prod-card-photo { position: relative; height: 200px; overflow: hidden; background: var(--bg-alt); }
+.prod-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.prod-photo[src=""] { display: none; }
+.prod-photo[src=""]+.prod-photo-placeholder { display: flex; }
+.prod-photo-placeholder {
+  display: none; /* mostra quando src vazio */
+  position: absolute; inset: 0;
+  flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  border: 2px dashed var(--border-mid);
+  background: var(--bg-alt);
+}
+.placeholder-icon { font-size: 28px; opacity: 0.35; }
+.placeholder-dims { font-size: 12px; font-weight: 700; color: var(--muted); }
+.placeholder-hint { font-size: 11px; color: var(--muted); opacity: 0.7; }
+
 .prod-card-body { padding: 20px 20px 8px; }
 .prod-card-category { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
 .prod-card-name { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 6px; line-height: 1.3; }
@@ -239,8 +283,18 @@ h2.section-title.white em { color: rgba(120,170,255,0.9); }
 .case-card.hero-case { background: var(--blue-dark); border-color: var(--blue-dark); }
 .case-tag { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 10px; border-radius: 100px; margin-bottom: 18px; background: var(--blue-subtle); color: var(--blue); border: 1px solid var(--blue-border); }
 .case-card.hero-case .case-tag { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.12); }
+
+/* Logo do cliente no case card */
+.case-logo-wrap { height: 32px; margin-bottom: 12px; display: flex; align-items: center; }
+.case-logo { height: 28px; width: auto; object-fit: contain; filter: grayscale(1) opacity(0.35); }
+.case-logo[src=""] { display: none; }
+.case-logo[src=""]+.case-client { display: block; }
+.case-logo:not([src=""])+.case-client { display: none; }
+
 .case-client { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--ink-dark); margin-bottom: 4px; line-height: 1.1; }
 .case-card.hero-case .case-client { color: var(--white); font-size: 34px; }
+.case-card.hero-case .case-logo { filter: grayscale(1) opacity(0.5) brightness(10); }
+
 .case-event { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
 .case-card.hero-case .case-event { color: rgba(255,255,255,0.4); }
 .case-metric { font-size: 64px; font-weight: 800; line-height: 1; color: var(--blue); margin-bottom: 6px; letter-spacing: -0.03em; }
@@ -403,20 +457,21 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
       </div>
       <div class="hero-stats reveal">
         <div class="stat">
-          <div class="stat-num">2<span>.500+</span></div>
+          <div class="stat-num">2.500<span class="suffix">+</span></div>
           <div class="stat-label">vendas em 3 dias (RD Summit)</div>
         </div>
         <div class="stat">
-          <div class="stat-num">800<span>+</span></div>
+          <div class="stat-num">800<span class="suffix">+</span></div>
           <div class="stat-label">envios QuintoAndar</div>
         </div>
         <div class="stat">
-          <div class="stat-num">17<span>+</span></div>
+          <div class="stat-num">17<span class="suffix">+</span></div>
           <div class="stat-label">estados atendidos</div>
         </div>
       </div>
     </div>
 
+    <!-- Painel direito: mock dashboard T&M Envios -->
     <div class="hero-visual reveal reveal-delay-2">
       <div class="float-badge">
         <strong>360°</strong>Solução completa
@@ -429,12 +484,12 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
         <div class="panel-cards">
           <div class="pcard accent">
             <div class="pcard-label">Em estoque hoje</div>
-            <div class="pcard-value">2<span>.847</span></div>
+            <div class="pcard-value">2.847</div>
             <div class="pcard-sub">peças disponíveis</div>
           </div>
           <div class="pcard">
             <div class="pcard-label">Envios este mês</div>
-            <div class="pcard-value" style="font-size:22px;">340<span>+</span></div>
+            <div class="pcard-value" style="font-size:22px;">340<span class="suffix">+</span></div>
             <div class="pcard-sub">17 estados</div>
           </div>
         </div>
@@ -455,21 +510,41 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
   </div>
 </section>
 
-<!-- LOGOS -->
+<!-- LOGOS — adicione os arquivos de logo e preencha o src de cada img -->
+<!-- Formato: SVG ou PNG com fundo transparente, versão monocromática, altura mínima 56px (será exibido em 28px) -->
 <div class="logos-strip">
   <span class="logos-label">Empresas que confiam</span>
   <div class="logos-divider"></div>
   <div class="logos-scroll">
-    <span class="client-logo">QuintoAndar</span>
-    <span class="client-logo">Gupy</span>
-    <span class="client-logo">RD Summit</span>
-    <span class="client-logo">Rede Fleming</span>
-    <span class="client-logo">PSG Academy</span>
-    <span class="client-logo">Wizard</span>
+    <div class="logo-slot">
+      <img src="" alt="QuintoAndar" class="logo-img">
+      <span class="logo-text">QuintoAndar</span>
+    </div>
+    <div class="logo-slot">
+      <img src="" alt="Gupy" class="logo-img">
+      <span class="logo-text">Gupy</span>
+    </div>
+    <div class="logo-slot">
+      <img src="" alt="RD Summit" class="logo-img">
+      <span class="logo-text">RD Summit</span>
+    </div>
+    <div class="logo-slot">
+      <img src="" alt="Rede Fleming" class="logo-img">
+      <span class="logo-text">Rede Fleming</span>
+    </div>
+    <div class="logo-slot">
+      <img src="" alt="PSG Academy" class="logo-img">
+      <span class="logo-text">PSG Academy</span>
+    </div>
+    <div class="logo-slot">
+      <img src="" alt="Wizard" class="logo-img">
+      <span class="logo-text">Wizard</span>
+    </div>
   </div>
 </div>
 
 <!-- PRODUTOS -->
+<!-- Fotos dos produtos: JPG ou WebP, 800×600px mínimo, fundo neutro ou em uso -->
 <section class="products-section" id="produtos">
   <div class="container">
     <div class="products-header">
@@ -480,8 +555,17 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
       <p class="section-sub">Confecção própria significa controle total de qualidade, prazo e acabamento — do bordado ao brinde.</p>
     </div>
     <div class="products-grid">
+
       <div class="prod-card reveal">
-        <div class="prod-card-visual">👔</div>
+        <div class="prod-card-photo">
+          <!-- Foto: camisa polo ou uniforme corporativo em uso — 800×600px -->
+          <img src="" alt="Uniformes Corporativos" class="prod-photo">
+          <div class="prod-photo-placeholder">
+            <span class="placeholder-icon">📷</span>
+            <span class="placeholder-dims">800 × 600 px</span>
+            <span class="placeholder-hint">Uniforme em uso</span>
+          </div>
+        </div>
         <div class="prod-card-body">
           <div class="prod-card-category">Vestuário</div>
           <div class="prod-card-name">Uniformes Corporativos</div>
@@ -492,8 +576,17 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
           <a href="#contato" class="prod-cta">Solicitar →</a>
         </div>
       </div>
+
       <div class="prod-card reveal reveal-delay-1">
-        <div class="prod-card-visual">🧢</div>
+        <div class="prod-card-photo">
+          <!-- Foto: boné bordado com logo corporativo — 800×600px -->
+          <img src="" alt="Bonés e Headwear" class="prod-photo">
+          <div class="prod-photo-placeholder">
+            <span class="placeholder-icon">📷</span>
+            <span class="placeholder-dims">800 × 600 px</span>
+            <span class="placeholder-hint">Boné bordado</span>
+          </div>
+        </div>
         <div class="prod-card-body">
           <div class="prod-card-category">Acessórios</div>
           <div class="prod-card-name">Bonés & Headwear</div>
@@ -504,8 +597,17 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
           <a href="#contato" class="prod-cta">Solicitar →</a>
         </div>
       </div>
+
       <div class="prod-card reveal reveal-delay-2">
-        <div class="prod-card-visual">🎒</div>
+        <div class="prod-card-photo">
+          <!-- Foto: mochila ou ecobag com logo — 800×600px -->
+          <img src="" alt="Mochilas e Bolsas" class="prod-photo">
+          <div class="prod-photo-placeholder">
+            <span class="placeholder-icon">📷</span>
+            <span class="placeholder-dims">800 × 600 px</span>
+            <span class="placeholder-hint">Mochila ou ecobag</span>
+          </div>
+        </div>
         <div class="prod-card-body">
           <div class="prod-card-category">Bags</div>
           <div class="prod-card-name">Mochilas & Bolsas</div>
@@ -516,8 +618,17 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
           <a href="#contato" class="prod-cta">Solicitar →</a>
         </div>
       </div>
+
       <div class="prod-card reveal">
-        <div class="prod-card-visual">🎁</div>
+        <div class="prod-card-photo">
+          <!-- Foto: kit onboarding montado — caixa aberta com peças — 800×600px -->
+          <img src="" alt="Kits Onboarding" class="prod-photo">
+          <div class="prod-photo-placeholder">
+            <span class="placeholder-icon">📷</span>
+            <span class="placeholder-dims">800 × 600 px</span>
+            <span class="placeholder-hint">Kit onboarding aberto</span>
+          </div>
+        </div>
         <div class="prod-card-body">
           <div class="prod-card-category">Kits</div>
           <div class="prod-card-name">Kits Onboarding & VIP</div>
@@ -528,8 +639,17 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
           <a href="#contato" class="prod-cta">Solicitar →</a>
         </div>
       </div>
+
       <div class="prod-card reveal reveal-delay-1">
-        <div class="prod-card-visual">☕</div>
+        <div class="prod-card-photo">
+          <!-- Foto: caneca, garrafa ou brinde com logo — flat lay recomendado — 800×600px -->
+          <img src="" alt="Brindes Personalizados" class="prod-photo">
+          <div class="prod-photo-placeholder">
+            <span class="placeholder-icon">📷</span>
+            <span class="placeholder-dims">800 × 600 px</span>
+            <span class="placeholder-hint">Brinde flat lay</span>
+          </div>
+        </div>
         <div class="prod-card-body">
           <div class="prod-card-category">Brindes</div>
           <div class="prod-card-name">Brindes Personalizados</div>
@@ -540,8 +660,17 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
           <a href="#contato" class="prod-cta">Solicitar →</a>
         </div>
       </div>
+
       <div class="prod-card reveal reveal-delay-2" style="background: var(--blue-dark); border-color: var(--blue);">
-        <div class="prod-card-visual" style="background: rgba(0,71,187,0.15);">✨</div>
+        <div class="prod-card-photo" style="background: rgba(0,71,187,0.2);">
+          <!-- Foto: processo de criação, sketchbook + peça final, ou moodboard — 800×600px -->
+          <img src="" alt="Coleção Exclusiva" class="prod-photo">
+          <div class="prod-photo-placeholder" style="border-color: rgba(255,255,255,0.15); background: rgba(0,71,187,0.15);">
+            <span class="placeholder-icon" style="opacity:0.5;">📷</span>
+            <span class="placeholder-dims" style="color: rgba(255,255,255,0.4);">800 × 600 px</span>
+            <span class="placeholder-hint" style="color: rgba(255,255,255,0.3);">Processo criativo</span>
+          </div>
+        </div>
         <div class="prod-card-body">
           <div class="prod-card-category" style="color: rgba(120,170,255,0.9);">Desenvolvimento</div>
           <div class="prod-card-name" style="color: white;">Coleção exclusiva</div>
@@ -552,6 +681,7 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
           <a href="#contato" class="prod-cta">Saiba mais →</a>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -624,6 +754,8 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
 </section>
 
 <!-- CASES -->
+<!-- Logos dos clientes: SVG ou PNG transparente, versão clara (para fundo escuro) e escura (para fundo claro) -->
+<!-- Dimensões: altura mínima 56px, largura variável — será exibido em 28px de altura -->
 <section class="cases-section" id="cases">
   <div class="container">
     <div>
@@ -633,27 +765,39 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
     <div class="cases-grid">
       <div class="case-card hero-case reveal">
         <span class="case-tag">Operação em evento</span>
-        <div class="case-client">RD Summit</div>
+        <div class="case-logo-wrap">
+          <!-- Logo RD Summit: versão clara (branca/cinza claro) para fundo azul escuro — altura mínima 56px -->
+          <img src="" alt="RD Summit" class="case-logo">
+          <div class="case-client">RD Summit</div>
+        </div>
         <div class="case-event">Com Levi Pedroso · 2024</div>
-        <div class="case-metric">2.500+</div>
+        <div class="case-metric">2.500<span style="font-size:0.6em;">+</span></div>
         <div class="case-metric-label">vendas em 3 dias de evento</div>
         <div class="case-divider"></div>
         <div class="case-desc">Coleção exclusiva com designer, 2.000 peças de staff e gestão completa da loja oficial física e online.</div>
       </div>
       <div class="case-card reveal reveal-delay-1">
         <span class="case-tag">E-commerce gerenciado</span>
-        <div class="case-client">Rede Fleming</div>
+        <div class="case-logo-wrap">
+          <!-- Logo Rede Fleming: versão escura para fundo claro — altura mínima 56px -->
+          <img src="" alt="Rede Fleming" class="case-logo">
+          <div class="case-client">Rede Fleming</div>
+        </div>
         <div class="case-event">17 unidades · Brasil</div>
-        <div class="case-metric-sm">1.300+</div>
+        <div class="case-metric-sm">1.300<span style="font-size:0.65em;">+</span></div>
         <div class="case-metric-label">produtos no 1º semestre</div>
         <div class="case-divider"></div>
         <div class="case-desc">Design, produção e e-commerce exclusivo para padronizar uniformes, gerando 5 dígitos em royalties.</div>
       </div>
       <div class="case-card reveal reveal-delay-2">
         <span class="case-tag">Fulfillment corporativo</span>
-        <div class="case-client">QuintoAndar</div>
+        <div class="case-logo-wrap">
+          <!-- Logo QuintoAndar: versão escura para fundo claro — altura mínima 56px -->
+          <img src="" alt="QuintoAndar" class="case-logo">
+          <div class="case-client">QuintoAndar</div>
+        </div>
         <div class="case-event">Times remotos · Brasil</div>
-        <div class="case-metric-sm">800+</div>
+        <div class="case-metric-sm">800<span style="font-size:0.65em;">+</span></div>
         <div class="case-metric-label">envios para colaboradores</div>
         <div class="case-divider"></div>
         <div class="case-desc">Kits de onboarding e uniformes entregues diretamente na casa de cada colaborador remoto.</div>
@@ -826,6 +970,21 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
 </footer>
 
 <script>
+// Nav: transparente no topo, glass escuro no scroll
+const nav = document.getElementById('nav');
+function updateNav() {
+  if (window.scrollY > 60) {
+    nav.classList.add('scrolled');
+    nav.classList.remove('at-top');
+  } else {
+    nav.classList.remove('scrolled');
+    nav.classList.add('at-top');
+  }
+}
+updateNav();
+window.addEventListener('scroll', updateNav, { passive: true });
+
+// Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
@@ -836,11 +995,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 80);
-});
-
+// WhatsApp mask
 document.getElementById('whatsapp').addEventListener('input', function(e) {
   let v = e.target.value.replace(/\D/g, '');
   v = v.replace(/^(\d{2})(\d)/, '($1) $2');
@@ -848,6 +1003,7 @@ document.getElementById('whatsapp').addEventListener('input', function(e) {
   e.target.value = v;
 });
 
+// Form submit
 function submitForm() {
   const fields = ['nome', 'empresa', 'email', 'whatsapp', 'solucao'];
   const empty = fields.some(id => !document.getElementById(id).value.trim());

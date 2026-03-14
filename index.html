@@ -173,18 +173,22 @@ nav.scrolled .nav-dropdown a:hover .nav-dd-label { color: var(--white); }
 .hero-logos-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; display: block; margin-bottom: 10px; }
 .hero-logos-row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
 
-/* Foto PNG sem fundo — absoluta no card, ancorada em baixo à direita */
+/* Foto PNG sem fundo — absoluta no card, sai pelo lado direito */
 .bento-main-img {
-  position: absolute; right: 0; bottom: 0;
+  position: absolute; right: -6%; bottom: 0;
   height: 92%; width: auto;
-  max-width: 42%;
-  object-fit: cover; object-position: right bottom;
   display: block;
   pointer-events: none; user-select: none;
   -webkit-user-drag: none; -webkit-user-select: none;
   z-index: 0;
 }
-.hero-logos-area { max-width: 54%; }
+
+/* Carrossel de logos */
+.hero-logos-area { max-width: 54%; overflow: hidden; }
+.hero-logos-marquee { overflow: hidden; mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%); }
+.hero-logos-track { display: flex; gap: 36px; align-items: center; width: max-content; animation: marquee-scroll 22s linear infinite; }
+.hero-logos-track:hover { animation-play-state: paused; }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* Cards direitos */
 .bento-card {
@@ -248,8 +252,8 @@ nav.scrolled .nav-dropdown a:hover .nav-dd-label { color: var(--white); }
 .logo-img:not([src=""])+.logo-text { display: none; }
 .logo-img[src=""]+.logo-text { display: block; }
 .logo-text { font-size: 14px; font-weight: 700; color: var(--muted); letter-spacing: 0.02em; white-space: nowrap; transition: color 0.2s; }
-.logo-slot:hover .logo-img { filter: grayscale(1) opacity(0.7); }
-.logo-slot:hover .logo-text { color: var(--ink); }
+.logo-slot:hover .logo-img { filter: grayscale(0) opacity(1); }
+.logo-slot:hover .logo-text { color: var(--blue); }
 
 /* ── SECTIONS ── */
 section { padding: 96px 48px; }
@@ -578,8 +582,10 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
           <a href="#contato" class="btn-dark">Solicitar proposta →</a>
           <div class="hero-logos-area">
             <span class="hero-logos-label">Empresas que confiam</span>
-            <div class="hero-logos-row" id="hero-logos-row">
-              <!-- Populado por clientes.js -->
+            <div class="hero-logos-marquee">
+              <div class="hero-logos-track" id="hero-logos-row">
+                <!-- Populado por clientes.js + duplicado via JS para loop -->
+              </div>
             </div>
           </div>
         </div>
@@ -1115,6 +1121,11 @@ loadHomeBlog();
 <script src="clientes.js"></script>
 <script>
 renderClientes('#hero-logos-row', { apenasDestaques: true });
+// Duplica itens para loop infinito sem salto
+(function() {
+  const track = document.getElementById('hero-logos-row');
+  if (track) track.innerHTML += track.innerHTML;
+})();
 </script>
 
 

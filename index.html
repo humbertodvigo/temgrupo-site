@@ -183,16 +183,42 @@ nav.scrolled .nav-links a:hover { color: var(--white); }
 .pr-tag.blue { background: var(--blue-subtle); color: var(--blue); }
 .pr-tag.green { background: #f0fdf4; color: #16a34a; }
 .pr-tag.amber { background: #fffbeb; color: #d97706; }
-.float-badge {
-  position: absolute; top: -14px; right: 24px;
-  background: var(--blue); color: var(--white);
-  border-radius: 10px; padding: 10px 14px;
-  font-size: 12px; font-weight: 600;
-  box-shadow: 0 8px 24px rgba(0,71,187,0.4);
-  animation: float 3s ease-in-out infinite;
+/* Product spec panel */
+.prod-spec { padding: 14px 0 12px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+.prod-spec-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.prod-spec-detail { font-size: 12px; color: var(--muted); }
+
+.size-grid-wrap { margin-bottom: 14px; }
+.size-grid-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.size-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+.size-slot {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 7px 4px; text-align: center;
+  font-size: 10px; font-weight: 600; color: var(--muted); line-height: 1;
 }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-.float-badge strong { display: block; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.size-slot.active { background: var(--blue-subtle); border-color: var(--blue-border); color: var(--blue); }
+.size-slot span { display: block; font-size: 11px; font-weight: 700; margin-top: 3px; color: var(--ink); }
+.size-slot.active span { color: var(--blue-dark); }
+
+.prod-steps { display: flex; gap: 0; margin-bottom: 12px; }
+.pstep {
+  flex: 1; text-align: center; font-size: 10px; font-weight: 600;
+  padding: 7px 4px; border: 1px solid var(--border);
+  color: var(--muted); background: var(--bg); position: relative;
+}
+.pstep:first-child { border-radius: 6px 0 0 6px; }
+.pstep:last-child { border-radius: 0 6px 6px 0; }
+.pstep + .pstep { border-left: none; }
+.pstep.done { background: var(--blue-subtle); color: var(--blue); border-color: var(--blue-border); }
+.pstep.active { background: var(--blue); color: var(--white); border-color: var(--blue); }
+
+.prod-summary {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.psummary-item { font-size: 12px; font-weight: 600; color: var(--ink); }
+.psummary-sep { color: var(--border-mid); font-size: 14px; }
 
 /* ── LOGOS ── */
 .logos-strip {
@@ -466,13 +492,13 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-eyebrow reveal"><span class="eyebrow-dot"></span>Soluções para empresas</div>
+      <div class="hero-eyebrow reveal"><span class="eyebrow-dot"></span>Confecção própria · Brusque, SC</div>
       <h1 class="reveal reveal-delay-1">
         Uniformes e brindes<br>
-        <em>da criação à entrega.</em>
+        <em>com a cara da sua empresa.</em>
       </h1>
       <p class="hero-sub reveal reveal-delay-2">
-        Confecção própria de uniformes e brindes, CD em Brusque SC, envios para todo o Brasil e gestão completa via dashboard. Tudo com um só parceiro.
+        Fábrica própria em Brusque, SC. Controle total de qualidade, prazo e acabamento — do bordado à malha personalizada. Sem intermediário, sem surpresa.
       </p>
       <div class="hero-actions reveal reveal-delay-3">
         <a href="#contato" class="btn-primary">Solicitar proposta →</a>
@@ -480,37 +506,29 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
       </div>
       <div class="hero-stats reveal">
         <div class="stat">
-          <div class="stat-num">2.500<span class="suffix">+</span></div>
-          <div class="stat-label">vendas em 3 dias (RD Summit)</div>
+          <div class="stat-num">10<span class="suffix">+</span></div>
+          <div class="stat-label">anos de confecção própria</div>
         </div>
         <div class="stat">
-          <div class="stat-num">800<span class="suffix">+</span></div>
-          <div class="stat-label">envios QuintoAndar</div>
+          <div class="stat-num">200<span class="suffix">+</span></div>
+          <div class="stat-label">empresas atendidas</div>
         </div>
         <div class="stat">
-          <div class="stat-num">17<span class="suffix">+</span></div>
-          <div class="stat-label">estados atendidos</div>
+          <div class="stat-num">50<span class="suffix">k+</span></div>
+          <div class="stat-label">peças produzidas por ano</div>
         </div>
       </div>
       <!-- Logos inline — mesmos arquivos que o logos-strip abaixo -->
       <div class="hero-logos reveal">
         <span class="hero-logos-label">Empresas que confiam</span>
-        <div class="hero-logos-row">
-          <div class="logo-slot"><img src="" alt="QuintoAndar" class="logo-img"><span class="logo-text">QuintoAndar</span></div>
-          <div class="logo-slot"><img src="" alt="Gupy" class="logo-img"><span class="logo-text">Gupy</span></div>
-          <div class="logo-slot"><img src="" alt="RD Summit" class="logo-img"><span class="logo-text">RD Summit</span></div>
-          <div class="logo-slot"><img src="" alt="Rede Fleming" class="logo-img"><span class="logo-text">Fleming</span></div>
-          <div class="logo-slot"><img src="" alt="PSG Academy" class="logo-img"><span class="logo-text">PSG</span></div>
-          <div class="logo-slot"><img src="" alt="Wizard" class="logo-img"><span class="logo-text">Wizard</span></div>
+        <div class="hero-logos-row" id="hero-logos-row">
+          <!-- Populado por clientes.js -->
         </div>
       </div>
     </div>
 
-    <!-- Painel direito: foto do produto + mock dashboard T&M Envios -->
+    <!-- Painel direito: foto do produto + especificação de pedido -->
     <div class="hero-visual reveal reveal-delay-2">
-      <div class="float-badge">
-        <strong>360°</strong>Solução completa
-      </div>
       <!-- 📷 Foto do produto: uniforme ou brinde premium em destaque -->
       <!-- Recomendado: 800×500px, JPG/WebP, fundo neutro ou ambiente corporativo -->
       <div class="hero-product-photo">
@@ -518,37 +536,39 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
         <div class="hero-product-placeholder">
           <span class="placeholder-icon">📷</span>
           <span class="placeholder-dims">800 × 500 px</span>
-          <span class="placeholder-hint">Uniforme ou brinde premium</span>
+          <span class="placeholder-hint">Uniforme ou brinde premium em uso</span>
         </div>
       </div>
       <div class="hero-panel stacked">
         <div class="panel-header">
-          <span class="panel-title">T&M Envios — Dashboard</span>
-          <span class="panel-status">● Operacional</span>
+          <span class="panel-title">Pedido em configuração</span>
+          <span class="panel-status">● Fábrica própria</span>
         </div>
-        <div class="panel-cards">
-          <div class="pcard accent">
-            <div class="pcard-label">Em estoque hoje</div>
-            <div class="pcard-value">2.847</div>
-            <div class="pcard-sub">peças disponíveis</div>
+        <div class="prod-spec">
+          <div class="prod-spec-name">Polo Corporativa — Piquet 250g</div>
+          <div class="prod-spec-detail">Cor: Azul Royal · Bordado em relevo</div>
+        </div>
+        <div class="size-grid-wrap">
+          <div class="size-grid-label">Grade de tamanhos</div>
+          <div class="size-grid">
+            <div class="size-slot">PP<span>12</span></div>
+            <div class="size-slot active">P<span>28</span></div>
+            <div class="size-slot active">M<span>34</span></div>
+            <div class="size-slot active">G<span>22</span></div>
+            <div class="size-slot">GG<span>14</span></div>
+            <div class="size-slot">XGG<span>6</span></div>
           </div>
-          <div class="pcard">
-            <div class="pcard-label">Envios este mês</div>
-            <div class="pcard-value" style="font-size:22px;">340<span class="suffix">+</span></div>
-            <div class="pcard-sub">17 estados</div>
-          </div>
         </div>
-        <div class="panel-row">
-          <span class="pr-name">Kit Onboarding — QuintoAndar</span>
-          <span class="pr-tag green">Entregue</span>
+        <div class="prod-steps">
+          <div class="pstep done">Briefing</div>
+          <div class="pstep done">Aprovação</div>
+          <div class="pstep active">Produção</div>
+          <div class="pstep">Entrega</div>
         </div>
-        <div class="panel-row">
-          <span class="pr-name">Uniforme Staff — RD Summit</span>
-          <span class="pr-tag blue">Em produção</span>
-        </div>
-        <div class="panel-row">
-          <span class="pr-name">Brinde Rede Fleming</span>
-          <span class="pr-tag amber">Aguardando</span>
+        <div class="prod-summary">
+          <span class="psummary-item">116 peças</span>
+          <span class="psummary-sep">·</span>
+          <span class="psummary-item">Prazo: 18 dias úteis</span>
         </div>
       </div>
     </div>
@@ -585,7 +605,7 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
         </div>
         <div class="prod-card-footer">
           <span class="prod-tag">Bordado & Silk</span>
-          <a href="#contato" class="prod-cta">Solicitar →</a>
+          <a href="uniformes-e-brindes.html" class="prod-cta">Ver página →</a>
         </div>
       </div>
 
@@ -703,8 +723,8 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
   <div class="container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;">
       <div>
-        <div class="eyebrow-tag">Nossas soluções</div>
-        <h2 class="section-title white">Mais do que produto.<br><em>Uma operação completa.</em></h2>
+        <div class="eyebrow-tag">Para quem precisa de mais</div>
+        <h2 class="section-title white">Precisa de mais do que produto?<br><em>A T&M opera com você.</em></h2>
       </div>
       <p class="section-sub light">Cada solução foi desenhada para eliminar um ponto de dor real na operação de RH, marketing e eventos.</p>
     </div>
@@ -746,7 +766,7 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
           <li>Integrado ao nosso fulfillment</li>
           <li>Ideal para franquias e escolas</li>
         </ul>
-        <a href="#contato" class="sol-link">Solicitar proposta →</a>
+        <a href="ecommerce.html" class="sol-link">Ver solução →</a>
       </div>
       <div class="sol-card reveal">
         <div class="sol-num">04</div>
@@ -759,7 +779,7 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
           <li>Padronização garantida</li>
           <li>Royalties automáticos</li>
         </ul>
-        <a href="#contato" class="sol-link">Solicitar proposta →</a>
+        <a href="plataforma-b2b.html" class="sol-link">Ver solução →</a>
       </div>
     </div>
   </div>
@@ -1040,6 +1060,11 @@ function submitForm() {
   document.getElementById('formContent').style.display = 'none';
   document.getElementById('formSuccess').style.display = 'block';
 }
+</script>
+
+<script src="clientes.js"></script>
+<script>
+renderClientes('#hero-logos-row', { apenasDestaques: true });
 </script>
 
 </body>

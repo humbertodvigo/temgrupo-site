@@ -1,8 +1,7 @@
 /**
  * api/callback.js — Recebe o código do GitHub e troca pelo token de acesso
- * Retorna o token ao Decap CMS via postMessage (janela popup)
  */
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   const { code, error, error_description } = req.query;
   const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
 
@@ -39,7 +38,7 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.send(postMessagePage('error', { error: 'Erro interno ao trocar o código pelo token.' }));
   }
-}
+};
 
 function postMessagePage(status, content) {
   const msg = JSON.stringify(content);
@@ -54,14 +53,10 @@ function postMessagePage(status, content) {
       window.location.origin
     );
   }
-  if (window.opener) {
-    sendMsg();
-    setTimeout(() => window.close(), 500);
-  } else {
-    document.body.innerHTML = '<p>Pode fechar esta janela.</p>';
-  }
+  if (window.opener) { sendMsg(); setTimeout(() => window.close(), 500); }
+  else { document.body.innerHTML = '<p>Pode fechar esta janela.</p>'; }
 })();
 <\/script>
-<p>Autenticando... pode fechar esta janela.</p>
+<p>Autenticando...</p>
 </body></html>`;
 }

@@ -6,7 +6,70 @@
   <title>T&M — Admin</title>
 </head>
 <body>
-  <!-- Decap CMS (antigo Netlify CMS) -->
+  <script>window.CMS_MANUAL_INIT = true;</script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+  CMS.init({
+    config: {
+      backend: {
+        name: 'github',
+        repo: 'humbertodvigo/temgrupo-site',
+        branch: 'main',
+        base_url: 'https://temgrupo-site.vercel.app',
+        auth_endpoint: '/api/auth',
+      },
+      media_folder: 'blog/imagens',
+      public_folder: '/blog/imagens',
+      locale: 'pt',
+      collections: [
+        {
+          name: 'posts',
+          label: 'Posts do Blog',
+          label_singular: 'Post',
+          folder: 'blog/posts',
+          create: true,
+          slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+          preview_path: '/blog/post.html?slug={{slug}}',
+          summary: '{{title}} — {{date}}',
+          fields: [
+            { label: 'Título',                name: 'title',   widget: 'string' },
+            { label: 'Data de publicação',    name: 'date',    widget: 'datetime', format: 'YYYY-MM-DD', date_format: 'DD/MM/YYYY', time_format: false },
+            { label: 'Resumo (aparece na listagem)', name: 'summary', widget: 'text' },
+            { label: 'Imagem de destaque',    name: 'image',   widget: 'image', required: false, hint: 'Recomendado: 1200×630px, JPG ou WebP' },
+            { label: 'Conteúdo',              name: 'body',    widget: 'markdown' },
+          ],
+        },
+        {
+          name: 'dados',
+          label: 'Dados do Site',
+          files: [
+            {
+              name: 'posts-index',
+              label: 'Índice de Posts (blog/posts.json)',
+              file: 'blog/posts.json',
+              description: 'Atualize aqui toda vez que publicar ou editar um post.',
+              fields: [
+                {
+                  name: 'posts',
+                  label: 'Posts',
+                  label_singular: 'Post',
+                  widget: 'list',
+                  summary: '{{fields.title}} — {{fields.date}}',
+                  fields: [
+                    { label: 'Slug (nome do arquivo sem .md)', name: 'slug',    widget: 'string' },
+                    { label: 'Título',  name: 'title',   widget: 'string' },
+                    { label: 'Data',    name: 'date',    widget: 'datetime', format: 'YYYY-MM-DD', date_format: 'DD/MM/YYYY', time_format: false },
+                    { label: 'Resumo', name: 'summary',  widget: 'text' },
+                    { label: 'Imagem', name: 'image',    widget: 'string', required: false },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  });
+  </script>
 </body>
 </html>

@@ -41,8 +41,8 @@ nav {
   border-bottom: 1px solid transparent;
 }
 .nav-inner {
-  max-width: 1464px; margin: 0 auto; width: 100%;
-  padding: 0 24px;
+  max-width: 1392px; margin: 0 auto; width: 100%;
+  padding: 0 16px;
   display: flex; align-items: center; justify-content: space-between;
   height: 100%;
 }
@@ -135,10 +135,10 @@ nav.scrolled .nav-dropdown a:hover { background: rgba(255,255,255,0.06); color: 
 }
 .bento-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12px; font-weight: 600; color: var(--body);
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
   margin-bottom: 24px;
 }
-.bento-badge-icon { font-size: 16px; }
 .bento-main h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(40px, 4.5vw, 62px);
@@ -175,27 +175,27 @@ nav.scrolled .nav-dropdown a:hover { background: rgba(255,255,255,0.06); color: 
 }
 .bento-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
 
-/* Card soluções — azul */
+.bento-card-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 14px; }
+.bento-card h2 { font-family: 'Playfair Display', serif; font-size: clamp(20px, 1.8vw, 26px); font-weight: 700; color: var(--ink-dark); letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 10px; }
+.bento-card p { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; margin-bottom: 16px; }
+.bento-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0; }
+.bento-pill { font-size: 11px; font-weight: 500; color: var(--body); background: var(--bg); border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px; text-decoration: none; }
+.bento-link { font-size: 13px; font-weight: 600; color: var(--blue); display: inline-flex; align-items: center; gap: 5px; margin-top: 16px; text-decoration: none; }
+
+/* Card soluções — azul (deve vir DEPOIS das regras base para sobrescrever) */
 .bento-solucoes { background: var(--blue); border-color: var(--blue); }
 .bento-solucoes .bento-card-tag { color: rgba(255,255,255,0.5); }
 .bento-solucoes h2 { color: var(--white); }
 .bento-solucoes p { color: rgba(255,255,255,0.65); }
-.bento-solucoes .bento-link { color: rgba(255,255,255,0.7); }
+.bento-solucoes .bento-link { color: rgba(255,255,255,0.75); margin-top: 16px; }
 .bento-solucoes .bento-pill { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); transition: background 0.15s; }
 .bento-solucoes .bento-pill:hover { background: rgba(255,255,255,0.22); }
-
-.bento-card-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 14px; }
-.bento-card h2 { font-family: 'Playfair Display', serif; font-size: clamp(20px, 1.8vw, 26px); font-weight: 700; color: var(--ink-dark); letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 10px; }
-.bento-card p { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; flex: 1; margin-bottom: 16px; }
-.bento-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-.bento-pill { font-size: 11px; font-weight: 500; color: var(--body); background: var(--bg); border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px; text-decoration: none; }
-.bento-link { font-size: 13px; font-weight: 600; color: var(--blue); display: inline-flex; align-items: center; gap: 5px; margin-top: auto; text-decoration: none; }
 
 /* Card contato — escuro */
 .bento-contato { background: var(--ink-dark); border-color: transparent; }
 .bento-contato .bento-card-tag { color: rgba(255,255,255,0.35); }
 .bento-contato h2 { color: var(--white); }
-.btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink-dark); padding: 11px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-top: auto; align-self: flex-start; }
+.btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink-dark); padding: 11px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-top: 16px; align-self: flex-start; }
 .btn-white:hover { background: var(--bg); transform: translateY(-1px); }
 
 .btn-primary {
@@ -503,10 +503,7 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
       <!-- BLOCO ESQUERDO PRINCIPAL -->
       <div class="bento-main reveal">
         <div class="bento-main-content">
-          <div class="bento-badge">
-            <span class="bento-badge-icon">👕</span>
-            Confecção própria · Brusque, SC
-          </div>
+          <div class="bento-badge">Confecção própria · Brusque, SC</div>
           <h1>Uniformes e brindes<br><em>com a cara da sua empresa.</em></h1>
           <a href="#contato" class="btn-dark">Solicitar proposta →</a>
           <span class="hero-logos-label">Empresas que confiam</span>

@@ -176,12 +176,15 @@ nav.scrolled .nav-dropdown a:hover .nav-dd-label { color: var(--white); }
 /* Foto PNG sem fundo — absoluta no card, ancorada em baixo à direita */
 .bento-main-img {
   position: absolute; right: 0; bottom: 0;
-  height: 88%; width: auto;
+  height: 92%; width: auto;
+  max-width: 42%;
+  object-fit: cover; object-position: right bottom;
   display: block;
   pointer-events: none; user-select: none;
   -webkit-user-drag: none; -webkit-user-select: none;
   z-index: 0;
 }
+.hero-logos-area { max-width: 54%; }
 
 /* Cards direitos */
 .bento-card {
@@ -573,12 +576,14 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
           <div class="bento-badge">Confecção própria · Brusque, SC</div>
           <h1>Uniformes e brindes<br><em>com a cara da sua empresa.</em></h1>
           <a href="#contato" class="btn-dark">Solicitar proposta →</a>
-          <span class="hero-logos-label">Empresas que confiam</span>
-          <div class="hero-logos-row" id="hero-logos-row">
-            <!-- Populado por clientes.js -->
+          <div class="hero-logos-area">
+            <span class="hero-logos-label">Empresas que confiam</span>
+            <div class="hero-logos-row" id="hero-logos-row">
+              <!-- Populado por clientes.js -->
+            </div>
           </div>
         </div>
-        <img src="imagens/hero.jpg" alt="Uniformes T&M" class="bento-main-img">
+        <img src="imagens/hero.png" alt="Uniformes T&M" class="bento-main-img">
       </div>
 
       <!-- CARD SUPERIOR DIREITO — Soluções (azul) -->

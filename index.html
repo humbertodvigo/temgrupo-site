@@ -125,16 +125,43 @@ nav.scrolled .nav-links a:hover { color: var(--white); }
 }
 .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
 
-.hero-stats { display: flex; gap: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+.hero-stats { display: flex; gap: 32px; padding-top: 28px; border-top: 1px solid var(--border); margin-bottom: 28px; }
 .stat-num { font-size: 28px; font-weight: 800; color: var(--ink-dark); line-height: 1; letter-spacing: -0.02em; }
 .stat-num .suffix { color: var(--blue); }
 .stat-label { font-size: 12px; color: var(--muted); font-weight: 400; margin-top: 4px; }
 
+/* Logos inline no hero */
+.hero-logos { padding-top: 20px; border-top: 1px solid var(--border); }
+.hero-logos-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; display: block; margin-bottom: 14px; }
+.hero-logos-row { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+
 /* Hero visual — painel dashboard */
+/* Hero visual: foto do produto + painel dashboard empilhados */
 .hero-visual { position: relative; }
+
+/* Foto do produto (topo do hero visual) */
+.hero-product-photo {
+  position: relative; height: 220px; overflow: hidden;
+  border-radius: 16px 16px 0 0; background: var(--bg-alt);
+}
+.hero-product-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-product-img[src=""] { display: none; }
+.hero-product-img[src=""]+.hero-product-placeholder { display: flex; }
+.hero-product-placeholder {
+  display: none;
+  position: absolute; inset: 0;
+  flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  border: 2px dashed var(--border-mid); border-radius: 16px 16px 0 0;
+}
+
+/* Painel dashboard (conectado à foto acima) */
 .hero-panel {
   background: var(--bg); border: 1px solid var(--border);
   border-radius: 16px; padding: 24px; position: relative;
+}
+.hero-panel.stacked {
+  border-radius: 0 0 16px 16px;
+  border-top: none;
 }
 .panel-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -469,14 +496,36 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
           <div class="stat-label">estados atendidos</div>
         </div>
       </div>
+      <!-- Logos inline — mesmos arquivos que o logos-strip abaixo -->
+      <div class="hero-logos reveal">
+        <span class="hero-logos-label">Empresas que confiam</span>
+        <div class="hero-logos-row">
+          <div class="logo-slot"><img src="" alt="QuintoAndar" class="logo-img"><span class="logo-text">QuintoAndar</span></div>
+          <div class="logo-slot"><img src="" alt="Gupy" class="logo-img"><span class="logo-text">Gupy</span></div>
+          <div class="logo-slot"><img src="" alt="RD Summit" class="logo-img"><span class="logo-text">RD Summit</span></div>
+          <div class="logo-slot"><img src="" alt="Rede Fleming" class="logo-img"><span class="logo-text">Fleming</span></div>
+          <div class="logo-slot"><img src="" alt="PSG Academy" class="logo-img"><span class="logo-text">PSG</span></div>
+          <div class="logo-slot"><img src="" alt="Wizard" class="logo-img"><span class="logo-text">Wizard</span></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Painel direito: mock dashboard T&M Envios -->
+    <!-- Painel direito: foto do produto + mock dashboard T&M Envios -->
     <div class="hero-visual reveal reveal-delay-2">
       <div class="float-badge">
         <strong>360°</strong>Solução completa
       </div>
-      <div class="hero-panel">
+      <!-- 📷 Foto do produto: uniforme ou brinde premium em destaque -->
+      <!-- Recomendado: 800×500px, JPG/WebP, fundo neutro ou ambiente corporativo -->
+      <div class="hero-product-photo">
+        <img src="" alt="Produto T&M" class="hero-product-img">
+        <div class="hero-product-placeholder">
+          <span class="placeholder-icon">📷</span>
+          <span class="placeholder-dims">800 × 500 px</span>
+          <span class="placeholder-hint">Uniforme ou brinde premium</span>
+        </div>
+      </div>
+      <div class="hero-panel stacked">
         <div class="panel-header">
           <span class="panel-title">T&M Envios — Dashboard</span>
           <span class="panel-status">● Operacional</span>
@@ -509,39 +558,6 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
     </div>
   </div>
 </section>
-
-<!-- LOGOS — adicione os arquivos de logo e preencha o src de cada img -->
-<!-- Formato: SVG ou PNG com fundo transparente, versão monocromática, altura mínima 56px (será exibido em 28px) -->
-<div class="logos-strip">
-  <span class="logos-label">Empresas que confiam</span>
-  <div class="logos-divider"></div>
-  <div class="logos-scroll">
-    <div class="logo-slot">
-      <img src="" alt="QuintoAndar" class="logo-img">
-      <span class="logo-text">QuintoAndar</span>
-    </div>
-    <div class="logo-slot">
-      <img src="" alt="Gupy" class="logo-img">
-      <span class="logo-text">Gupy</span>
-    </div>
-    <div class="logo-slot">
-      <img src="" alt="RD Summit" class="logo-img">
-      <span class="logo-text">RD Summit</span>
-    </div>
-    <div class="logo-slot">
-      <img src="" alt="Rede Fleming" class="logo-img">
-      <span class="logo-text">Rede Fleming</span>
-    </div>
-    <div class="logo-slot">
-      <img src="" alt="PSG Academy" class="logo-img">
-      <span class="logo-text">PSG Academy</span>
-    </div>
-    <div class="logo-slot">
-      <img src="" alt="Wizard" class="logo-img">
-      <span class="logo-text">Wizard</span>
-    </div>
-  </div>
-</div>
 
 <!-- PRODUTOS -->
 <!-- Fotos dos produtos: JPG ou WebP, 800×600px mínimo, fundo neutro ou em uso -->

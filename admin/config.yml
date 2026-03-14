@@ -27,8 +27,11 @@
 # Backend padrão: GitHub OAuth via proxy Vercel (api/auth.js)
 # Troque por git-gateway se usar Netlify (ver acima)
 backend:
-  name: git-gateway
+  name: github
+  repo: humbertodvigo/temgrupo-site
   branch: main
+  base_url: https://temgrupo-site.vercel.app
+  auth_endpoint: /api/auth
 
 media_folder: "blog/imagens"
 public_folder: "/blog/imagens"

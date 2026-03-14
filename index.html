@@ -1116,19 +1116,6 @@ loadHomeBlog();
 renderClientes('#hero-logos-row', { apenasDestaques: true });
 </script>
 
-<!-- Netlify Identity Widget — captura tokens de convite/recuperação de senha -->
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-if (window.netlifyIdentity) {
-  window.netlifyIdentity.on('init', user => {
-    if (!user) {
-      window.netlifyIdentity.on('login', () => {
-        document.location.href = '/admin/';
-      });
-    }
-  });
-}
-</script>
 
 </body>
 </html>

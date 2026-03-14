@@ -1,0 +1,79 @@
+# ─────────────────────────────────────────────────────────────────
+# Decap CMS — Configuração do Grupo T&M
+# Acesse o admin em: https://seusite.com/admin/
+#
+# AUTENTICAÇÃO — dois caminhos:
+#
+# Opção A (mais simples — recomendada):
+#   1. Adicione o site no Netlify (plano gratuito):
+#      netlify.com/start → conecte o mesmo repo do GitHub
+#   2. Em Site Settings → Identity → Enable Identity
+#   3. Em Identity → Services → Git Gateway → Enable
+#   4. Troque o backend abaixo para:
+#        backend:
+#          name: git-gateway
+#          branch: main
+#
+# Opção B (Vercel, GitHub OAuth):
+#   1. Crie um OAuth App em github.com/settings/developers
+#      Homepage: https://temgrupo-site.vercel.app
+#      Callback: https://temgrupo-site.vercel.app/api/callback
+#   2. Adicione as env vars no Vercel:
+#      GITHUB_CLIENT_ID=...
+#      GITHUB_CLIENT_SECRET=...
+#   3. Use o backend abaixo (já configurado para Vercel).
+# ─────────────────────────────────────────────────────────────────
+
+# Backend padrão: GitHub OAuth via proxy Vercel (api/auth.js)
+# Troque por git-gateway se usar Netlify (ver acima)
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "blog/imagens"
+public_folder: "/blog/imagens"
+
+locale: pt
+
+# ─────────────────────────────────────────────────────────────────
+# COLEÇÕES
+# ─────────────────────────────────────────────────────────────────
+collections:
+
+  # Posts individuais (cada arquivo .md em blog/posts/)
+  - name: "posts"
+    label: "Posts do Blog"
+    label_singular: "Post"
+    folder: "blog/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "/blog/post.html?slug={{slug}}"
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data de publicação", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: "Resumo (aparece na listagem)", name: "summary", widget: "text" }
+      - { label: "Imagem de destaque", name: "image", widget: "image", required: false, hint: "Recomendado: 1200×630px, JPG ou WebP" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  # Índice de posts — atualizar junto ao criar/editar um post
+  # Isso alimenta a página blog/index.html sem precisar de build
+  - name: "dados"
+    label: "Dados do Site"
+    files:
+      - name: "posts-index"
+        label: "Índice de Posts (blog/posts.json)"
+        file: "blog/posts.json"
+        description: "Atualize aqui toda vez que publicar ou editar um post. Os campos devem bater com o post criado acima."
+        fields:
+          - name: posts
+            label: Posts
+            label_singular: Post
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: "Slug (nome do arquivo sem .md)", name: "slug", widget: "string", hint: "Ex: 2024-01-15-meu-post" }
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+              - { label: "Resumo", name: "summary", widget: "text" }
+              - { label: "Imagem", name: "image", widget: "string", required: false }

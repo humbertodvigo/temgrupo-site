@@ -381,12 +381,12 @@ h2.sh.white em { color: #90b4f0; }
 .dash-content .section-tag { color: #90b4f0; }
 .dash-content .section-tag::before { background: #90b4f0; }
 
-.dash-features { margin-top: 32px; display: flex; flex-direction: column; gap: 0; }
+.dash-features { margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
 .dash-feat {
-  display: flex; gap: 14px; padding: 18px 0;
+  display: flex; gap: 12px; padding: 16px 12px 16px 0;
   border-bottom: 1px solid rgba(255,255,255,0.07);
 }
-.dash-feat:last-child { border-bottom: none; }
+.dash-feat:nth-last-child(-n+2) { border-bottom: none; }
 .dash-feat-num {
   font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
   color: rgba(0,71,187,0.6); flex-shrink: 0; width: 32px; line-height: 1.1;
@@ -741,6 +741,16 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
         <a href="#contato" class="btn-primary">Agendar demonstração →</a>
         <a href="#como-funciona" class="btn-secondary">Ver como funciona</a>
       </div>
+      <div class="hero-trust reveal d4">
+        <span class="trust-label">Usado por</span>
+        <div class="trust-logos">
+          <span class="trust-logo">QuintoAndar</span>
+          <span class="trust-logo">Cora</span>
+          <span class="trust-logo">Ilegra</span>
+          <span class="trust-logo">Farmácia São João</span>
+          <span class="trust-logo">Booyah</span>
+        </div>
+      </div>
     </div>
 
     <!-- Dashboard mock -->
@@ -798,21 +808,6 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- LOGOS -->
-<div class="logos-bar">
-  <div class="logos-inner">
-    <span class="logos-label">Usado por</span>
-    <div class="logos-divider"></div>
-    <div class="logos-row">
-      <span class="logos-client">QuintoAndar</span>
-      <span class="logos-client">Cora</span>
-      <span class="logos-client">Ilegra</span>
-      <span class="logos-client">Farmácia São João</span>
-      <span class="logos-client">Booyah</span>
     </div>
   </div>
 </div>
@@ -1006,6 +1001,9 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
             style="width:100%;display:block;max-height:380px;object-fit:cover;"
           ></video>
         </div>
+        <div style="text-align:center;margin-top:20px;">
+          <a href="#contato" class="btn-primary" style="background:var(--blue);color:#fff;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:7px;">Agendar demonstração →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1083,7 +1081,7 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
       <div class="offer-card reveal">
         <div class="offer-card-header">
           <div class="offer-badge"><span class="offer-badge-dot"></span>Oferta de entrada</div>
-          <h3>3 meses de armazenagem gratuita para pedidos acima de R$ 45.000</h3>
+          <h3>3 meses de armazenagem gratuita*</h3>
           <p>Você produz com a T&M e os primeiros 3 meses de armazenagem no nosso CD são por nossa conta. Zero custo para começar a operar.</p>
         </div>
         <div class="offer-card-body">
@@ -1096,7 +1094,7 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
             <li class="offer-item"><span class="offer-check">✓</span>DRE mensal com custo detalhado por envio</li>
           </ul>
           <a href="#contato" class="offer-cta">Quero os 3 meses grátis →</a>
-          <p class="offer-fine">Oferta válida para novos clientes com pedido mínimo de R$ 45.000.</p>
+          <p class="offer-fine">* Oferta válida para novos clientes com pedido mínimo de R$ 45.000.</p>
         </div>
       </div>
 
@@ -1145,7 +1143,7 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
         <ul class="cta-points">
           <li class="cta-point"><span class="cp-check">✓</span>Diagnóstico gratuito da sua operação atual</li>
           <li class="cta-point"><span class="cp-check">✓</span>Demo do painel T&M Envios em 30 minutos</li>
-          <li class="cta-point"><span class="cp-check">✓</span>3 meses de armazenagem grátis para pedidos acima de R$ 45.000</li>
+          <li class="cta-point"><span class="cp-check">✓</span>3 meses de armazenagem grátis*</li>
           <li class="cta-point"><span class="cp-check">✓</span>Proposta personalizada em até 24h</li>
         </ul>
       </div>

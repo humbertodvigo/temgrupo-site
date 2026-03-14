@@ -35,42 +35,76 @@ body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  padding: 0 48px; height: 62px;
-  display: flex; align-items: center; justify-content: space-between;
+  height: 62px;
+  display: flex; align-items: center;
   transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
   border-bottom: 1px solid transparent;
 }
+.nav-inner {
+  max-width: 1464px; margin: 0 auto; width: 100%;
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 100%;
+}
 
 /* Topo da página: transparente, texto escuro */
-nav.at-top {
-  background: transparent;
-  border-color: transparent;
-  backdrop-filter: none;
-}
+nav.at-top { background: transparent; border-color: transparent; backdrop-filter: none; }
 nav.at-top .nav-links a    { color: var(--body); }
 nav.at-top .nav-links a:hover { color: var(--ink-dark); }
 
 /* Após scroll: glass escuro, texto claro */
-nav.scrolled {
-  background: rgba(12,15,26,0.92);
-  border-color: rgba(255,255,255,0.06);
-  backdrop-filter: blur(16px);
-}
+nav.scrolled { background: rgba(12,15,26,0.92); border-color: rgba(255,255,255,0.06); backdrop-filter: blur(16px); }
 nav.scrolled .nav-logo-img   { filter: brightness(0) invert(1); }
 nav.scrolled .nav-links a    { color: rgba(255,255,255,0.5); }
 nav.scrolled .nav-links a:hover { color: var(--white); }
 
 .nav-logo { display: flex; align-items: center; text-decoration: none; }
-.nav-logo-img { height: 36px; width: auto; display: block; transition: filter 0.4s; }
+.nav-logo-img { height: 44px; width: auto; display: block; transition: filter 0.4s; }
 
 .nav-links { display: flex; gap: 28px; align-items: center; }
-.nav-links a { font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.4s; }
+.nav-links > a { font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.4s; }
 .nav-cta {
   background: var(--blue); color: var(--white) !important;
   padding: 9px 20px; border-radius: 6px;
   font-weight: 600; font-size: 13px; transition: background 0.2s;
 }
 .nav-cta:hover { background: var(--blue-hover) !important; }
+
+/* Dropdown Soluções */
+.nav-dropdown-wrap { position: relative; display: flex; align-items: center; }
+.nav-dropdown-trigger {
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: color 0.4s; display: flex; align-items: center; gap: 4px; cursor: pointer;
+}
+.nav-dropdown-trigger::after { content: '▾'; font-size: 9px; opacity: 0.6; }
+nav.at-top .nav-dropdown-trigger { color: var(--body); }
+nav.at-top .nav-dropdown-trigger:hover { color: var(--ink-dark); }
+nav.scrolled .nav-dropdown-trigger { color: rgba(255,255,255,0.5); }
+nav.scrolled .nav-dropdown-trigger:hover { color: var(--white); }
+.nav-dropdown {
+  position: absolute; top: calc(100% + 20px); left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 6px;
+  min-width: 256px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.nav-dropdown-wrap:hover .nav-dropdown {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500; color: var(--ink);
+  text-decoration: none; transition: background 0.15s;
+}
+.nav-dropdown a:hover { background: var(--bg); color: var(--blue); }
+nav.scrolled .nav-dropdown { background: #1a1f35; border-color: rgba(255,255,255,0.08); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+nav.scrolled .nav-dropdown a { color: rgba(255,255,255,0.7); }
+nav.scrolled .nav-dropdown a:hover { background: rgba(255,255,255,0.06); color: var(--white); }
 
 /* ── HERO ── */
 /* ── BENTO HERO ── */
@@ -80,9 +114,9 @@ nav.scrolled .nav-links a:hover { color: var(--white); }
   max-width: 1360px; margin: 0 auto;
   display: grid;
   grid-template-columns: 1.65fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
   gap: 12px;
-  min-height: 580px;
+  min-height: 600px;
 }
 
 /* Bloco esquerdo principal */
@@ -91,9 +125,13 @@ nav.scrolled .nav-links a:hover { color: var(--white); }
   background: var(--bg-alt);
   border: 1px solid var(--border);
   border-radius: 24px;
-  padding: 48px 44px 0;
+  padding: 0;
   display: flex; flex-direction: column;
-  overflow: hidden; position: relative;
+  overflow: hidden;
+}
+.bento-main-content {
+  padding: 48px 44px 28px;
+  flex-shrink: 0;
 }
 .bento-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -119,46 +157,45 @@ nav.scrolled .nav-links a:hover { color: var(--white); }
 }
 .btn-dark:hover { background: #1a1f35; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 .hero-logos-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; display: block; margin-bottom: 10px; }
-.hero-logos-row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; }
+.hero-logos-row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
 
-/* Área da foto — bottom right do bloco principal */
-.bento-photo { flex: 1; position: relative; margin-left: auto; width: 82%; min-height: 180px; }
-.bento-photo-inner {
-  position: absolute; inset: 0;
-  background: var(--bg); border-radius: 16px 16px 0 0;
-  border: 1px solid var(--border); border-bottom: none;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 8px; overflow: hidden;
-}
-.bento-photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.bento-photo-inner img[src=""] { display: none; }
-.bento-photo-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px; text-align: center; }
+/* Foto integrada — preenche o fundo do bloco principal */
+.bento-photo-fill { flex: 1; position: relative; min-height: 220px; }
+.bento-photo-fill img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bento-photo-fill img[src=""] { display: none; }
+.bento-photo-fill img[src=""] ~ .bento-photo-placeholder { display: flex; }
+.bento-photo-placeholder { display: none; position: absolute; inset: 0; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px; text-align: center; background: var(--bg); }
+.bento-photo-fill::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 64px; background: linear-gradient(var(--bg-alt), transparent); z-index: 1; pointer-events: none; }
 
 /* Cards direitos */
 .bento-card {
   border-radius: 24px; border: 1px solid var(--border);
-  padding: 32px; display: flex; flex-direction: column;
+  padding: 28px 32px; display: flex; flex-direction: column;
   text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
 }
-.bento-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-.bento-solucoes { background: var(--white); }
+.bento-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+
+/* Card soluções — azul */
+.bento-solucoes { background: var(--blue); border-color: var(--blue); }
+.bento-solucoes .bento-card-tag { color: rgba(255,255,255,0.5); }
+.bento-solucoes h2 { color: var(--white); }
+.bento-solucoes p { color: rgba(255,255,255,0.65); }
+.bento-solucoes .bento-link { color: rgba(255,255,255,0.7); }
+.bento-solucoes .bento-pill { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); transition: background 0.15s; }
+.bento-solucoes .bento-pill:hover { background: rgba(255,255,255,0.22); }
+
 .bento-card-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin-bottom: 14px; }
 .bento-card h2 { font-family: 'Playfair Display', serif; font-size: clamp(20px, 1.8vw, 26px); font-weight: 700; color: var(--ink-dark); letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 10px; }
-.bento-card p { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; flex: 1; margin-bottom: 18px; }
-.bento-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
-.bento-pill { font-size: 11px; font-weight: 500; color: var(--body); background: var(--bg); border: 1px solid var(--border); padding: 4px 10px; border-radius: 100px; }
-.bento-link { font-size: 13px; font-weight: 600; color: var(--blue); display: inline-flex; align-items: center; gap: 5px; margin-top: auto; }
+.bento-card p { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; flex: 1; margin-bottom: 16px; }
+.bento-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.bento-pill { font-size: 11px; font-weight: 500; color: var(--body); background: var(--bg); border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px; text-decoration: none; }
+.bento-link { font-size: 13px; font-weight: 600; color: var(--blue); display: inline-flex; align-items: center; gap: 5px; margin-top: auto; text-decoration: none; }
 
 /* Card contato — escuro */
 .bento-contato { background: var(--ink-dark); border-color: transparent; }
 .bento-contato .bento-card-tag { color: rgba(255,255,255,0.35); }
 .bento-contato h2 { color: var(--white); }
-.bento-contato p { color: rgba(255,255,255,0.4); }
-.bento-stat-row { display: flex; gap: 24px; margin-bottom: 20px; }
-.bento-stat-n { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--white); line-height: 1; letter-spacing: -0.02em; }
-.bento-stat-n span { color: #60a5fa; }
-.bento-stat-l { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 3px; }
-.btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink-dark); padding: 12px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-top: auto; align-self: flex-start; }
+.btn-white { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink-dark); padding: 11px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-top: auto; align-self: flex-start; }
 .btn-white:hover { background: var(--bg); transform: translateY(-1px); }
 
 .btn-primary {
@@ -436,14 +473,25 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="/" class="nav-logo">
-    <img src="logo.svg" alt="Grupo T&M" class="nav-logo-img">
-  </a>
-  <div class="nav-links">
-    <a href="#produtos">Produtos</a>
-    <a href="#solucoes">Soluções</a>
-    <a href="#cases">Cases</a>
-    <a href="#contato" class="nav-cta">Solicitar proposta →</a>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="logo.svg" alt="Grupo T&M" class="nav-logo-img">
+    </a>
+    <div class="nav-links">
+      <a href="#produtos">Produtos</a>
+      <div class="nav-dropdown-wrap">
+        <a href="#solucoes" class="nav-dropdown-trigger">Soluções</a>
+        <div class="nav-dropdown">
+          <a href="uniformes-e-brindes.html">👕 Uniformes & Brindes</a>
+          <a href="armazenamento-e-envio.html">📦 Armazenamento & Envio</a>
+          <a href="operacao-de-loja-em-eventos.html">🏪 Operação em Eventos</a>
+          <a href="ecommerce.html">🛒 Criação de E-commerce</a>
+          <a href="plataforma-b2b.html">🏢 Plataforma B2B</a>
+        </div>
+      </div>
+      <a href="#cases">Cases</a>
+      <a href="#contato" class="nav-cta">Solicitar proposta →</a>
+    </div>
   </div>
 </nav>
 
@@ -454,58 +502,47 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
 
       <!-- BLOCO ESQUERDO PRINCIPAL -->
       <div class="bento-main reveal">
-        <div class="bento-badge">
-          <span class="bento-badge-icon">👕</span>
-          Confecção própria · Brusque, SC
-        </div>
-        <h1>Uniformes e brindes<br><em>com a cara da sua empresa.</em></h1>
-        <a href="#contato" class="btn-dark">Solicitar proposta →</a>
-        <span class="hero-logos-label">Empresas que confiam</span>
-        <div class="hero-logos-row" id="hero-logos-row">
-          <!-- Populado por clientes.js -->
+        <div class="bento-main-content">
+          <div class="bento-badge">
+            <span class="bento-badge-icon">👕</span>
+            Confecção própria · Brusque, SC
+          </div>
+          <h1>Uniformes e brindes<br><em>com a cara da sua empresa.</em></h1>
+          <a href="#contato" class="btn-dark">Solicitar proposta →</a>
+          <span class="hero-logos-label">Empresas que confiam</span>
+          <div class="hero-logos-row" id="hero-logos-row">
+            <!-- Populado por clientes.js -->
+          </div>
         </div>
         <!-- 📷 Foto: 3 pessoas — camiseta, moletom e corta-vento | 900×700px JPG/WebP -->
-        <div class="bento-photo">
-          <div class="bento-photo-inner">
-            <img src="" alt="Equipe vestindo uniformes T&M">
-            <div class="bento-photo-placeholder">
-              <span style="font-size:32px;opacity:0.2">📷</span>
-              <span style="font-size:11px;color:var(--muted);font-weight:500;text-align:center;line-height:1.6">3 pessoas — camiseta, moletom e corta-vento<br>Recomendado: 900 × 700 px</span>
-            </div>
+        <div class="bento-photo-fill">
+          <img src="" alt="Equipe vestindo uniformes T&M">
+          <div class="bento-photo-placeholder">
+            <span style="font-size:32px;opacity:0.2">📷</span>
+            <span style="font-size:11px;color:var(--muted);font-weight:500;text-align:center;line-height:1.6">3 pessoas — camiseta, moletom e corta-vento<br>Recomendado: 900 × 700 px</span>
           </div>
         </div>
       </div>
 
-      <!-- CARD SUPERIOR DIREITO — Soluções -->
-      <a href="#solucoes" class="bento-card bento-solucoes reveal">
+      <!-- CARD SUPERIOR DIREITO — Soluções (azul) -->
+      <div class="bento-card bento-solucoes reveal">
         <div class="bento-card-tag">Soluções</div>
         <h2>5 soluções.<br>Um fornecedor.</h2>
-        <p>Do uniforme ao e-commerce, tudo com a T&M — sem múltiplos fornecedores para gerenciar.</p>
+        <p>Do uniforme ao e-commerce, tudo com a T&M — sem precisar gerenciar múltiplos fornecedores.</p>
         <div class="bento-pills">
-          <span class="bento-pill">👕 Uniformes</span>
-          <span class="bento-pill">🎁 Brindes</span>
-          <span class="bento-pill">📦 Fulfillment</span>
-          <span class="bento-pill">🏪 Eventos</span>
-          <span class="bento-pill">🛒 E-commerce</span>
+          <a href="uniformes-e-brindes.html" class="bento-pill">👕 Uniformes & Brindes</a>
+          <a href="armazenamento-e-envio.html" class="bento-pill">📦 Armazenamento & Envio</a>
+          <a href="operacao-de-loja-em-eventos.html" class="bento-pill">🏪 Loja em Eventos</a>
+          <a href="ecommerce.html" class="bento-pill">🛒 E-commerce</a>
+          <a href="plataforma-b2b.html" class="bento-pill">🏢 Plataforma B2B</a>
         </div>
-        <span class="bento-link">Conhecer soluções <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      </a>
+        <a href="#solucoes" class="bento-link">Ver todas as soluções <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
 
-      <!-- CARD INFERIOR DIREITO — Contato -->
+      <!-- CARD INFERIOR DIREITO — Contato (escuro) -->
       <a href="#contato" class="bento-card bento-contato reveal">
         <div class="bento-card-tag">Fale com a gente</div>
         <h2>Orçamento em até 24h.</h2>
-        <p>Nossa equipe responde rápido e sem formulário genérico — só o que você precisa saber.</p>
-        <div class="bento-stat-row">
-          <div>
-            <div class="bento-stat-n">200<span>+</span></div>
-            <div class="bento-stat-l">empresas atendidas</div>
-          </div>
-          <div>
-            <div class="bento-stat-n">24<span>h</span></div>
-            <div class="bento-stat-l">tempo de resposta</div>
-          </div>
-        </div>
         <span class="btn-white">Solicitar proposta →</span>
       </a>
 
@@ -776,45 +813,6 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
   </div>
 </section>
 
-<!-- PROCESSO -->
-<section class="process-section">
-  <div class="container">
-    <div style="text-align:center;">
-      <div class="eyebrow-tag" style="justify-content:center;">Como funciona</div>
-      <h2 class="section-title" style="text-align:center;">Simples <em>do início ao fim</em></h2>
-      <p class="section-sub" style="margin:0 auto;text-align:center;">Quatro passos para transformar sua operação.</p>
-    </div>
-    <div class="process-steps">
-      <div class="process-step reveal">
-        <div class="step-n">01</div>
-        <div class="step-icon-wrap">🏭</div>
-        <h4>Produção integrada</h4>
-        <p>Fabricamos seus uniformes e brindes com qualidade garantida e design alinhado à sua marca.</p>
-        <div class="step-connector">→</div>
-      </div>
-      <div class="process-step reveal reveal-delay-1">
-        <div class="step-n">02</div>
-        <div class="step-icon-wrap">📦</div>
-        <h4>Estoque no CD</h4>
-        <p>Seus produtos ficam seguros no nosso Centro de Distribuição. Você paga pelo espaço que ocupar.</p>
-        <div class="step-connector">→</div>
-      </div>
-      <div class="process-step reveal reveal-delay-2">
-        <div class="step-n">03</div>
-        <div class="step-icon-wrap">💻</div>
-        <h4>Gestão em nuvem</h4>
-        <p>Acesse o painel T&M Envios e controle tudo em tempo real de qualquer dispositivo.</p>
-        <div class="step-connector">→</div>
-      </div>
-      <div class="process-step reveal reveal-delay-3">
-        <div class="step-n">04</div>
-        <div class="step-icon-wrap">🚚</div>
-        <h4>Envio com um clique</h4>
-        <p>Solicite e despachamos para qualquer lugar do Brasil com rastreio e fretes expressos.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- BENEFÍCIOS -->
 <section class="benefits-section">
@@ -822,15 +820,15 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;">
       <div>
         <div class="eyebrow-tag">Por que a T&M</div>
-        <h2 class="section-title white">Menos atrito.<br><em>Mais resultado.</em></h2>
+        <h2 class="section-title white">A solidez de quem tem<br><em>tradição com inovação.</em></h2>
       </div>
-      <p class="section-sub light">Construímos cada solução pensando em devolver tempo e visibilidade para o seu time.</p>
+      <p class="section-sub light">3.000 m² de parque fabril em Brusque, SC — no coração do maior polo têxtil do Brasil.</p>
     </div>
     <div class="benefits-grid">
       <div class="ben-card highlight reveal">
-        <div class="ben-icon">🎁</div>
-        <h4>6 meses grátis</h4>
-        <p>Isenção total na mensalidade do CD ao trazer sua operação para a T&M. Consulte condições.</p>
+        <div class="ben-icon">🏛️</div>
+        <h4>+45 anos de tradição têxtil</h4>
+        <p>Alicerçados no Grupo Casa da Malha, fundado em 1985 — tradição artesanal combinada com tecnologia de ponta.</p>
       </div>
       <div class="ben-card reveal reveal-delay-1">
         <div class="ben-icon">💰</div>

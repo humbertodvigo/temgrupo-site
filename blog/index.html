@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Grupo T&M</title>
+<meta name="description" content="Artigos sobre uniformes corporativos, brindes, logística e gestão de pedidos para empresas e redes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:        #0047BB;
+  --blue-dark:   #001E60;
+  --blue-hover:  #0052D4;
+  --blue-subtle: #EEF3FC;
+  --blue-border: rgba(0,71,187,0.15);
+  --white:       #FFFFFF;
+  --bg:          #F8F9FC;
+  --bg-alt:      #F2F4F9;
+  --border:      #E4E8F2;
+  --border-mid:  #D0D6E8;
+  --ink:         #191C28;
+  --ink-dark:    #0C0F1A;
+  --body:        #48506A;
+  --muted:       #8792AA;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white); color: var(--ink);
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--blue); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 62px; background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 40px; gap: 0;
+  transition: box-shadow 0.2s;
+}
+nav.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+.nav-back {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  padding: 6px 12px 6px 0; border-right: 1px solid var(--border);
+  margin-right: 20px; transition: color 0.15s;
+}
+.nav-back:hover { color: var(--ink); }
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo-img { height: 36px; width: auto; display: block; }
+.nav-sep { width: 1px; height: 16px; background: var(--border); margin: 0 16px; }
+.nav-page { font-size: 13px; color: var(--muted); }
+.nav-spacer { flex: 1; }
+.nav-cta {
+  background: var(--blue); color: var(--white);
+  padding: 7px 18px; border-radius: 7px;
+  font-size: 13.5px; font-weight: 600; text-decoration: none;
+  transition: all 0.15s;
+}
+.nav-cta:hover { background: var(--blue-hover); box-shadow: 0 4px 14px rgba(0,71,187,0.3); }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 112px 40px 64px;
+  border-bottom: 1px solid var(--border);
+}
+.page-header-inner { max-width: 800px; margin: 0 auto; }
+.page-eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+}
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 48px); font-weight: 700;
+  color: var(--ink); letter-spacing: -0.02em; line-height: 1.15;
+  margin-bottom: 16px;
+}
+.page-header h1 em { font-style: italic; color: var(--blue); }
+.page-header p {
+  font-size: 17px; color: var(--body); line-height: 1.65; max-width: 560px;
+}
+
+/* ── POSTS GRID ── */
+.posts-section {
+  padding: 64px 40px 96px; max-width: 1200px; margin: 0 auto;
+}
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px; margin-top: 48px;
+}
+.post-card {
+  border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden; text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: var(--white);
+  display: flex; flex-direction: column;
+}
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.09);
+}
+.post-card-img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover;
+  background: var(--bg-alt);
+}
+.post-card-img-placeholder {
+  width: 100%; aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--blue-subtle) 0%, var(--bg-alt) 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.post-card-img-placeholder svg { opacity: 0.25; }
+.post-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.post-card-date {
+  font-size: 12px; color: var(--muted); font-weight: 500;
+  margin-bottom: 10px;
+}
+.post-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.01em; line-height: 1.3;
+  margin-bottom: 10px;
+}
+.post-card-summary {
+  font-size: 14px; color: var(--body); line-height: 1.6;
+  flex: 1; margin-bottom: 18px;
+}
+.post-card-link {
+  font-size: 13px; font-weight: 600; color: var(--blue);
+  display: flex; align-items: center; gap: 5px;
+}
+
+/* Empty state */
+.posts-empty {
+  grid-column: 1 / -1; text-align: center;
+  padding: 80px 20px;
+}
+.posts-empty-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: var(--blue-subtle); display: flex; align-items: center;
+  justify-content: center; margin: 0 auto 20px;
+}
+.posts-empty h3 {
+  font-family: 'Playfair Display', serif; font-size: 22px;
+  color: var(--ink); margin-bottom: 8px;
+}
+.posts-empty p { font-size: 15px; color: var(--muted); max-width: 360px; margin: 0 auto; }
+
+/* ── FOOTER ── */
+footer { background: var(--ink-dark); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: start; gap: 40px; flex-wrap: wrap; }
+.footer-brand { max-width: 240px; }
+.footer-logo { display: block; text-decoration: none; margin-bottom: 12px; }
+.footer-logo-img { height: 40px; width: auto; filter: brightness(0) invert(1); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; }
+.footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col li a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+.footer-col li a:hover { color: var(--white); }
+.footer-bottom { max-width: 1200px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width: 768px) {
+  .page-header { padding: 96px 24px 48px; }
+  .posts-section { padding: 48px 20px 72px; }
+  nav { padding: 0 24px; }
+  .posts-grid { grid-template-columns: 1fr; }
+}
+@media(max-width: 640px) {
+  .footer-inner { flex-direction: column; gap: 28px; }
+  nav { padding: 0 16px; }
+  .nav-page { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Início
+  </a>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo.svg" alt="Grupo T&M" class="nav-logo-img">
+  </a>
+  <div class="nav-sep"></div>
+  <span class="nav-page">Blog</span>
+  <div class="nav-spacer"></div>
+  <a href="../index.html#contato" class="nav-cta">Solicitar proposta →</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-eyebrow reveal">Grupo T&M · Blog</div>
+    <h1 class="reveal">Ideias para quem<br><em>veste</em> a empresa.</h1>
+    <p class="reveal">Uniformes, brindes, logística e gestão de pedidos — o que aprendemos atendendo 200+ empresas.</p>
+  </div>
+</div>
+
+<!-- POSTS -->
+<div class="posts-section">
+  <div class="posts-grid" id="posts-grid">
+    <!-- Populado por JS -->
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="../index.html" class="footer-logo">
+        <img src="../logo.svg" alt="Grupo T&M" class="footer-logo-img">
+      </a>
+      <p class="footer-desc">Confecção própria, logística e tecnologia para redes e grandes empresas. Brusque, SC.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Soluções</h4>
+      <ul>
+        <li><a href="../armazenamento-e-envio.html">Armazenamento & Envio</a></li>
+        <li><a href="../operacao-de-loja-em-eventos.html">Loja em Eventos</a></li>
+        <li><a href="../ecommerce.html">E-commerce</a></li>
+        <li><a href="../plataforma-b2b.html">Plataforma B2B</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="mailto:contato@temgrupo.com.br">contato@temgrupo.com.br</a></li>
+        <li><a href="../index.html#contato">Solicitar proposta</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Grupo T&M · Brusque, SC · Todos os direitos reservados.</span>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
+});
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function formatDate(iso) {
+  const d = new Date(iso + 'T12:00:00');
+  return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+}
+
+async function loadPosts() {
+  const grid = document.getElementById('posts-grid');
+  try {
+    const res = await fetch('posts.json');
+    const data = await res.json();
+    const posts = (data.posts || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+
+    if (!posts.length) {
+      grid.innerHTML = `
+        <div class="posts-empty">
+          <div class="posts-empty-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 10h16M4 14h10" stroke="#0047BB" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Em breve por aqui.</h3>
+          <p>Nosso time está preparando os primeiros artigos. Volte em breve!</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = posts.map(p => {
+      const imgHtml = p.image
+        ? `<img class="post-card-img" src="${p.image}" alt="${p.title}" loading="lazy">`
+        : `<div class="post-card-img-placeholder">
+             <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+               <rect x="6" y="10" width="28" height="20" rx="3" stroke="#0047BB" stroke-width="2"/>
+               <circle cx="14" cy="16" r="2.5" stroke="#0047BB" stroke-width="1.5"/>
+               <path d="M6 26l8-7 6 5 4-4 10 6" stroke="#0047BB" stroke-width="1.5" stroke-linejoin="round"/>
+             </svg>
+           </div>`;
+      return `
+        <a class="post-card" href="post.html?slug=${encodeURIComponent(p.slug)}">
+          ${imgHtml}
+          <div class="post-card-body">
+            <div class="post-card-date">${formatDate(p.date)}</div>
+            <div class="post-card-title">${p.title}</div>
+            <div class="post-card-summary">${p.summary}</div>
+            <span class="post-card-link">Ler artigo <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+        </a>`;
+    }).join('');
+
+  } catch {
+    grid.innerHTML = `<div class="posts-empty"><h3>Erro ao carregar posts.</h3><p>Tente novamente mais tarde.</p></div>`;
+  }
+}
+
+loadPosts();
+</script>
+</body>
+</html>

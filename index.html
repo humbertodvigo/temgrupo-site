@@ -47,9 +47,6 @@ nav.at-top {
   border-color: transparent;
   backdrop-filter: none;
 }
-nav.at-top .logo-tm        { color: var(--ink-dark); }
-nav.at-top .logo-tm span   { color: var(--blue); }
-nav.at-top .logo-grupo     { color: var(--muted); }
 nav.at-top .nav-links a    { color: var(--body); }
 nav.at-top .nav-links a:hover { color: var(--ink-dark); }
 
@@ -59,16 +56,12 @@ nav.scrolled {
   border-color: rgba(255,255,255,0.06);
   backdrop-filter: blur(16px);
 }
-nav.scrolled .logo-tm        { color: var(--white); }
-nav.scrolled .logo-tm span   { color: var(--blue); }
-nav.scrolled .logo-grupo     { color: rgba(255,255,255,0.3); }
+nav.scrolled .nav-logo-img   { filter: brightness(0) invert(1); }
 nav.scrolled .nav-links a    { color: rgba(255,255,255,0.5); }
 nav.scrolled .nav-links a:hover { color: var(--white); }
 
-.nav-logo { display: flex; align-items: baseline; gap: 5px; text-decoration: none; }
-.logo-tm { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; transition: color 0.4s; }
-.logo-tm span { transition: color 0.4s; }
-.logo-grupo { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.4s; }
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo-img { height: 36px; width: auto; display: block; transition: filter 0.4s; }
 
 .nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a { font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.4s; }
@@ -394,14 +387,18 @@ h2.section-title.white em { color: rgba(120,170,255,0.9); }
 .form-success p { font-size: 14px; color: var(--body); line-height: 1.6; }
 
 /* ── FOOTER ── */
-footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.06); padding: 28px 48px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.footer-brand { font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.3); letter-spacing: -0.01em; }
-.footer-brand span { color: var(--blue); }
+footer { background: var(--ink-dark); padding: 48px 48px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: start; gap: 40px; flex-wrap: wrap; }
+.footer-brand { max-width: 240px; }
+.footer-logo { display: block; text-decoration: none; margin-bottom: 12px; }
+.footer-logo-img { height: 40px; width: auto; filter: brightness(0) invert(1); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; }
+.footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col li a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+.footer-col li a:hover { color: var(--white); }
+.footer-bottom { max-width: 1200px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07); }
 .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
-.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
-.footer-links a { font-size: 12px; color: rgba(255,255,255,0.25); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: rgba(255,255,255,0.7); }
 
 /* ── ANIMATIONS ── */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -441,8 +438,8 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
   .step-connector { display: none; }
   .benefits-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  footer { padding: 24px 20px; }
-  .footer-inner { flex-direction: column; text-align: center; }
+  footer { padding: 36px 20px; }
+  .footer-inner { flex-direction: column; gap: 28px; }
   .nav-links { display: none; }
   section { padding: 52px 20px; }
   .logos-strip { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -455,8 +452,7 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
 <!-- NAV -->
 <nav id="nav">
   <a href="/" class="nav-logo">
-    <span class="logo-tm">T<span>&</span>M</span>
-    <span class="logo-grupo">Grupo</span>
+    <img src="logo.svg" alt="Grupo T&M" class="nav-logo-img">
   </a>
   <div class="nav-links">
     <a href="#produtos">Produtos</a>
@@ -974,14 +970,31 @@ footer { background: var(--ink-dark); border-top: 1px solid rgba(255,255,255,0.0
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">T<span>&</span>M Grupo</div>
-    <span class="footer-copy">© 2025 Grupo T&M · Brusque, SC · contato@temgrupo.com.br</span>
-    <div class="footer-links">
-      <a href="armazenamento-e-envio.html">Armazenamento & Envio</a>
-      <a href="operacao-de-loja-em-eventos.html">Loja em Eventos</a>
-      <a href="https://instagram.com/temgrupo">@temgrupo</a>
-      <a href="https://envios.temgrupo.com.br">T&M Envios</a>
+    <div class="footer-brand">
+      <a href="/" class="footer-logo">
+        <img src="logo.svg" alt="Grupo T&M" class="footer-logo-img">
+      </a>
+      <p class="footer-desc">Confecção própria, logística e tecnologia para redes e grandes empresas. Brusque, SC.</p>
     </div>
+    <div class="footer-col">
+      <h4>Soluções</h4>
+      <ul>
+        <li><a href="armazenamento-e-envio.html">Armazenamento & Envio</a></li>
+        <li><a href="operacao-de-loja-em-eventos.html">Loja em Eventos</a></li>
+        <li><a href="ecommerce.html">E-commerce</a></li>
+        <li><a href="plataforma-b2b.html">Plataforma B2B</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="mailto:contato@temgrupo.com.br">contato@temgrupo.com.br</a></li>
+        <li><a href="#contato">Solicitar proposta</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Grupo T&M · Brusque, SC · Todos os direitos reservados.</span>
   </div>
 </footer>
 

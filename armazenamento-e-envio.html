@@ -58,16 +58,8 @@ nav.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
   margin-right: 20px; transition: color 0.15s;
 }
 .nav-back:hover { color: var(--ink); }
-.nav-logo {
-  display: flex; align-items: center; gap: 8px; text-decoration: none;
-}
-.nav-logo-mark {
-  width: 28px; height: 28px; border-radius: 6px; background: var(--blue);
-  display: flex; align-items: center; justify-content: center;
-}
-.nav-logo-mark svg { width: 16px; height: 16px; }
-.nav-logo-text { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
-.nav-logo-text span { color: var(--blue); }
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo-img { height: 36px; width: auto; display: block; }
 .nav-sep { width: 1px; height: 16px; background: var(--border); margin: 0 16px; }
 .nav-page { font-size: 13px; color: var(--muted); }
 .nav-spacer { flex: 1; }
@@ -670,17 +662,18 @@ h2.sh.white em { color: #90b4f0; }
 .form-success p { font-size: 14px; color: var(--body); line-height: 1.6; }
 
 /* ── FOOTER ── */
-footer {
-  background: var(--white); border-top: 1px solid var(--border);
-  padding: 24px 40px;
-  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-}
-.footer-brand { font-size: 14px; font-weight: 700; color: var(--ink); }
-.footer-brand span { color: var(--blue); }
-.footer-copy { font-size: 12px; color: var(--muted); }
-.footer-links { display: flex; gap: 20px; }
-.footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
-.footer-links a:hover { color: var(--ink); }
+footer { background: var(--ink-dark); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: start; gap: 40px; flex-wrap: wrap; }
+.footer-brand { max-width: 240px; }
+.footer-logo { display: block; text-decoration: none; margin-bottom: 12px; }
+.footer-logo-img { height: 40px; width: auto; filter: brightness(0) invert(1); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; }
+.footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col li a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+.footer-col li a:hover { color: var(--white); }
+.footer-bottom { max-width: 1200px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
 /* ── REVEAL ── */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -706,7 +699,7 @@ footer {
   .step-arrow { display: none; }
   .case-secondary { flex-direction: column; }
   .form-row { grid-template-columns: 1fr; }
-  footer { flex-direction: column; text-align: center; }
+  .footer-inner { flex-direction: column; gap: 28px; }
   section { padding: 48px 16px; }
   nav { padding: 0 16px; }
   .nav-page { display: none; }
@@ -717,17 +710,12 @@ footer {
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="/" class="nav-back">← Início</a>
+  <a href="index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Início
+  </a>
   <a href="/" class="nav-logo">
-    <div class="nav-logo-mark">
-      <svg viewBox="0 0 16 16" fill="none">
-        <rect x="1" y="1" width="6" height="6" rx="1.5" fill="white" opacity="0.9"/>
-        <rect x="9" y="1" width="6" height="6" rx="1.5" fill="white" opacity="0.6"/>
-        <rect x="1" y="9" width="6" height="6" rx="1.5" fill="white" opacity="0.6"/>
-        <rect x="9" y="9" width="6" height="6" rx="1.5" fill="white" opacity="0.9"/>
-      </svg>
-    </div>
-    <span class="nav-logo-text">Grupo <span>T&M</span></span>
+    <img src="logo.svg" alt="Grupo T&M" class="nav-logo-img">
   </a>
   <div class="nav-sep"></div>
   <span class="nav-page">Armazenamento & Envio</span>
@@ -1272,13 +1260,32 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-brand">Grupo <span>T&M</span></div>
-  <span class="footer-copy">© 2026 Grupo T&M · Brusque, SC</span>
-  <div class="footer-links">
-    <a href="/">Início</a>
-    <a href="/operacao-eventos">Operação em Eventos</a>
-    <a href="https://instagram.com/temgrupo">@temgrupo</a>
-    <a href="https://envios.temgrupo.com.br">T&M Envios</a>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">
+        <img src="logo.svg" alt="Grupo T&M" class="footer-logo-img">
+      </a>
+      <p class="footer-desc">Confecção própria, logística e tecnologia para redes e grandes empresas. Brusque, SC.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Soluções</h4>
+      <ul>
+        <li><a href="armazenamento-e-envio.html">Armazenamento & Envio</a></li>
+        <li><a href="operacao-de-loja-em-eventos.html">Loja em Eventos</a></li>
+        <li><a href="ecommerce.html">E-commerce</a></li>
+        <li><a href="plataforma-b2b.html">Plataforma B2B</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="mailto:contato@temgrupo.com.br">contato@temgrupo.com.br</a></li>
+        <li><a href="#contato">Solicitar proposta</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Grupo T&M · Brusque, SC · Todos os direitos reservados.</span>
   </div>
 </footer>
 

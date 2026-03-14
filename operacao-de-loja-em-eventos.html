@@ -46,44 +46,22 @@ body {
 
 /* ─── NAV ─── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 64px;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center;
-  padding: 0 40px;
-  gap: 32px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 62px; background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 40px; gap: 0;
+  transition: box-shadow 0.2s;
 }
-
-.nav-logo {
-  font-family: 'DM Sans', sans-serif; font-weight: 700;
-  font-size: 18px; letter-spacing: -0.03em; color: var(--ink);
-  text-decoration: none;
-  display: flex; align-items: center; gap: 6px;
-}
-.nav-logo-dot { 
-  width: 7px; height: 7px; border-radius: 50%; 
-  background: var(--blue); display: inline-block; 
-}
-
+nav.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+.nav-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 6px 12px 6px 0; border-right: 1px solid var(--border); margin-right: 20px; transition: color 0.15s; }
+.nav-back:hover { color: var(--ink); }
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo-img { height: 36px; width: auto; display: block; }
+.nav-sep { width: 1px; height: 16px; background: var(--border); margin: 0 16px; }
+.nav-page { font-size: 13px; color: var(--muted); }
 .nav-spacer { flex: 1; }
-
-.nav-links { display: flex; gap: 28px; align-items: center; }
-.nav-links a {
-  font-size: 14px; font-weight: 500; color: var(--body);
-  text-decoration: none; transition: color 0.15s;
-}
-.nav-links a:hover { color: var(--ink); }
-
-.nav-cta {
-  background: var(--blue); color: var(--white);
-  padding: 9px 20px; border-radius: 7px;
-  font-size: 14px; font-weight: 600;
-  text-decoration: none; transition: background 0.15s, box-shadow 0.15s;
-  white-space: nowrap;
-}
-.nav-cta:hover { background: var(--blue-hover); box-shadow: 0 4px 16px rgba(0,71,187,0.3); }
+.nav-cta { background: var(--blue); color: var(--white); padding: 7px 18px; border-radius: 7px; font-size: 13.5px; font-weight: 600; text-decoration: none; transition: all 0.15s; }
+.nav-cta:hover { background: var(--blue-hover); box-shadow: 0 4px 14px rgba(0,71,187,0.3); }
 
 /* ─── HERO ─── */
 .hero {
@@ -749,17 +727,18 @@ h2.headline.white em { color: #90b4f0; }
 .form-success p { font-size: 14px; color: var(--body); line-height: 1.6; }
 
 /* ─── FOOTER ─── */
-footer {
-  background: var(--white); border-top: 1px solid var(--border);
-  padding: 24px 40px;
-  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
-}
-.footer-brand { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
-.footer-brand span { color: var(--blue); }
-.footer-copy { font-size: 12px; color: var(--muted); }
-.footer-links { display: flex; gap: 20px; }
-.footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
-.footer-links a:hover { color: var(--ink); }
+footer { background: var(--black); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: start; gap: 40px; flex-wrap: wrap; }
+.footer-brand { max-width: 240px; }
+.footer-logo { display: block; text-decoration: none; margin-bottom: 12px; }
+.footer-logo-img { height: 40px; width: auto; filter: brightness(0) invert(1); }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; }
+.footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col li a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+.footer-col li a:hover { color: var(--white); }
+.footer-bottom { max-width: 1200px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
 /* ─── VIDEO EMBEDS ─── */
 .video-wrap {
@@ -843,7 +822,7 @@ footer {
   .cfc-client { font-size: 32px; }
   .cfc-metric-num { font-size: 36px; }
   .nav-links { display: none; }
-  footer { flex-direction: column; text-align: center; }
+  .footer-inner { flex-direction: column; gap: 28px; }
   section { padding: 48px 16px; }
 }
 </style>
@@ -851,17 +830,17 @@ footer {
 <body>
 
 <!-- NAV -->
-<nav>
-  <a href="/" class="nav-logo">
-    <span class="nav-logo-dot"></span>
-    Grupo T&M
+<nav id="nav">
+  <a href="index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Início
   </a>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.svg" alt="Grupo T&M" class="nav-logo-img">
+  </a>
+  <div class="nav-sep"></div>
+  <span class="nav-page">Operação de Loja em Eventos</span>
   <div class="nav-spacer"></div>
-  <div class="nav-links">
-    <a href="#como-funciona">Como funciona</a>
-    <a href="#cases">Cases</a>
-    <a href="#modelos">Modelos</a>
-  </div>
   <a href="#contato" class="nav-cta">Solicitar proposta →</a>
 </nav>
 
@@ -1509,12 +1488,32 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-brand">Grupo <span>T&M</span></div>
-  <span class="footer-copy">© 2026 Grupo T&M. Todos os direitos reservados.</span>
-  <div class="footer-links">
-    <a href="https://instagram.com/temgrupo">@temgrupo</a>
-    <a href="https://humbertodvigo.com">humbertodvigo.com</a>
-    <a href="https://envios.temgrupo.com.br">T&M Envios</a>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo">
+        <img src="logo.svg" alt="Grupo T&M" class="footer-logo-img">
+      </a>
+      <p class="footer-desc">Confecção própria, logística e tecnologia para redes e grandes empresas. Brusque, SC.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Soluções</h4>
+      <ul>
+        <li><a href="armazenamento-e-envio.html">Armazenamento & Envio</a></li>
+        <li><a href="operacao-de-loja-em-eventos.html">Loja em Eventos</a></li>
+        <li><a href="ecommerce.html">E-commerce</a></li>
+        <li><a href="plataforma-b2b.html">Plataforma B2B</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="mailto:contato@temgrupo.com.br">contato@temgrupo.com.br</a></li>
+        <li><a href="#contato">Solicitar proposta</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Grupo T&M · Brusque, SC · Todos os direitos reservados.</span>
   </div>
 </footer>
 

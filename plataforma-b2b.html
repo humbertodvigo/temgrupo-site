@@ -49,11 +49,8 @@ nav {
 nav.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
 .nav-back { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); text-decoration: none; padding: 6px 12px 6px 0; border-right: 1px solid var(--border); margin-right: 20px; transition: color 0.15s; }
 .nav-back:hover { color: var(--ink); }
-.nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-.nav-logo-mark { width: 28px; height: 28px; border-radius: 6px; background: var(--blue); display: flex; align-items: center; justify-content: center; }
-.nav-logo-mark svg { width: 16px; height: 16px; }
-.nav-logo-text { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
-.nav-logo-text span { color: var(--blue); }
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo-img { height: 36px; width: auto; display: block; }
 .nav-sep { width: 1px; height: 16px; background: var(--border); margin: 0 16px; }
 .nav-page { font-size: 13px; color: var(--muted); }
 .nav-spacer { flex: 1; }
@@ -315,9 +312,7 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
 .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: start; gap: 40px; flex-wrap: wrap; }
 .footer-brand { max-width: 240px; }
 .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; margin-bottom: 12px; }
-.footer-logo-mark { width: 28px; height: 28px; border-radius: 6px; background: var(--blue); display: flex; align-items: center; justify-content: center; }
-.footer-logo-text { font-size: 14px; font-weight: 700; color: var(--white); letter-spacing: -0.02em; }
-.footer-logo-text span { color: #60a5fa; }
+.footer-logo-img { height: 40px; width: auto; filter: brightness(0) invert(1); }
 .footer-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; }
 .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -344,12 +339,7 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
     Início
   </a>
   <a href="index.html" class="nav-logo">
-    <div class="nav-logo-mark">
-      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 4h10M3 8h7M3 12h5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <span class="nav-logo-text">T<span>&</span>M</span>
+    <img src="logo.svg" alt="Grupo T&M" class="nav-logo-img">
   </a>
   <div class="nav-sep"></div>
   <span class="nav-page">Plataforma B2B para Redes</span>
@@ -853,12 +843,7 @@ footer { background: var(--ink-dark); padding: 48px 40px; }
   <div class="footer-inner">
     <div class="footer-brand">
       <a href="index.html" class="footer-logo">
-        <div class="footer-logo-mark">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 4h10M3 8h7M3 12h5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <span class="footer-logo-text">T<span>&</span>M</span>
+        <img src="logo.svg" alt="Grupo T&M" class="footer-logo-img">
       </a>
       <p class="footer-desc">Confecção própria, logística e tecnologia para redes e grandes empresas. Brusque, SC.</p>
     </div>

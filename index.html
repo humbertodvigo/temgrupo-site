@@ -419,6 +419,21 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
 .footer-bottom { max-width: 1200px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07); }
 .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
 
+/* ── BLOG HOME SECTION ── */
+.blog-home-section { background: var(--bg); padding: 80px 0; }
+.blog-home-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; gap: 24px; }
+.blog-home-header .section-title { margin-bottom: 0; }
+.blog-home-link { font-size: 13px; font-weight: 600; color: var(--blue); text-decoration: none; white-space: nowrap; }
+.blog-home-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.bh-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: box-shadow 0.2s, transform 0.2s; }
+.bh-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.bh-card-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--bg-alt); }
+.bh-card-img-placeholder { width: 100%; aspect-ratio: 16/9; background: var(--bg-alt); }
+.bh-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+.bh-card-date { font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.bh-card-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink-dark); line-height: 1.3; margin-bottom: 8px; }
+.bh-card-summary { font-size: 13px; color: var(--body); line-height: 1.6; font-weight: 300; flex: 1; }
+
 /* ── ANIMATIONS ── */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -442,6 +457,7 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
   .process-step:nth-child(3) { border-radius: 0 0 0 14px; }
   .process-step:last-child { border-radius: 0 0 14px 0; border-right: 1px solid var(--border); }
   .benefits-grid { grid-template-columns: 1fr 1fr; }
+  .blog-home-grid { grid-template-columns: 1fr 1fr; }
   .cta-inner { grid-template-columns: 1fr; gap: 40px; }
   .products-grid { grid-template-columns: 1fr 1fr; }
   section { padding: 64px 32px; }
@@ -457,6 +473,8 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
   .process-step:last-child { border-radius: 0 0 14px 14px !important; }
   .step-connector { display: none; }
   .benefits-grid { grid-template-columns: 1fr; }
+  .blog-home-grid { grid-template-columns: 1fr; }
+  .blog-home-header { flex-direction: column; align-items: flex-start; }
   .form-row { grid-template-columns: 1fr; }
   footer { padding: 36px 20px; }
   .footer-inner { flex-direction: column; gap: 28px; }
@@ -524,14 +542,14 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
       <!-- CARD SUPERIOR DIREITO — Soluções (azul) -->
       <div class="bento-card bento-solucoes reveal">
         <div class="bento-card-tag">Soluções</div>
-        <h2>5 soluções.<br>Um fornecedor.</h2>
+        <h2>Qual é<br>a sua dor?</h2>
         <p>Do uniforme ao e-commerce, tudo com a T&M — sem precisar gerenciar múltiplos fornecedores.</p>
         <div class="bento-pills">
-          <a href="uniformes-e-brindes.html" class="bento-pill">👕 Uniformes & Brindes</a>
-          <a href="armazenamento-e-envio.html" class="bento-pill">📦 Armazenamento & Envio</a>
-          <a href="operacao-de-loja-em-eventos.html" class="bento-pill">🏪 Loja em Eventos</a>
-          <a href="ecommerce.html" class="bento-pill">🛒 E-commerce</a>
-          <a href="plataforma-b2b.html" class="bento-pill">🏢 Plataforma B2B</a>
+          <a href="uniformes-e-brindes.html" class="bento-pill">Prazo imprevisível</a>
+          <a href="armazenamento-e-envio.html" class="bento-pill">Estoque sem controle</a>
+          <a href="operacao-de-loja-em-eventos.html" class="bento-pill">Evento sem loja</a>
+          <a href="ecommerce.html" class="bento-pill">E-commerce parado</a>
+          <a href="plataforma-b2b.html" class="bento-pill">Rede despadronizada</a>
         </div>
         <a href="#solucoes" class="bento-link">Ver todas as soluções <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
@@ -540,6 +558,7 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
       <a href="#contato" class="bento-card bento-contato reveal">
         <div class="bento-card-tag">Fale com a gente</div>
         <h2>Orçamento em até 24h.</h2>
+        <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;margin-bottom:4px;">Nossos consultores estão prontos para entender como a T&M pode transformar sua operação.</p>
         <span class="btn-white">Solicitar proposta →</span>
       </a>
 
@@ -856,6 +875,20 @@ footer { background: var(--ink-dark); padding: 48px 48px; }
   </div>
 </section>
 
+<!-- BLOG PREVIEW -->
+<section class="blog-home-section" id="blog-preview">
+  <div class="container">
+    <div class="blog-home-header reveal">
+      <div>
+        <div class="eyebrow-tag">Blog</div>
+        <h2 class="section-title">Conteúdo para<br><em>sua operação</em></h2>
+      </div>
+      <a href="/blog/" class="blog-home-link">Ver todos os artigos →</a>
+    </div>
+    <div class="blog-home-grid" id="blog-home-grid"></div>
+  </div>
+</section>
+
 <!-- CTA / FORM -->
 <section class="cta-section" id="contato">
   <div class="container">
@@ -993,6 +1026,33 @@ function submitForm() {
   document.getElementById('formContent').style.display = 'none';
   document.getElementById('formSuccess').style.display = 'block';
 }
+
+async function loadHomeBlog() {
+  const grid = document.getElementById('blog-home-grid');
+  const section = document.getElementById('blog-preview');
+  if (!grid) return;
+  try {
+    const res = await fetch('/blog/posts.json');
+    const data = await res.json();
+    const posts = (data.posts || []).slice(0, 3);
+    if (!posts.length) { section && (section.style.display = 'none'); return; }
+    grid.innerHTML = posts.map(p => {
+      const img = p.image
+        ? `<img class="bh-card-img" src="${p.image}" alt="${p.title}" loading="lazy">`
+        : `<div class="bh-card-img-placeholder"></div>`;
+      const date = p.date ? new Date(p.date).toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' }) : '';
+      return `<a href="/blog/post.html?slug=${p.slug}" class="bh-card reveal">
+        ${img}
+        <div class="bh-card-body">
+          ${date ? `<div class="bh-card-date">${date}</div>` : ''}
+          <div class="bh-card-title">${p.title}</div>
+          ${p.summary ? `<div class="bh-card-summary">${p.summary}</div>` : ''}
+        </div>
+      </a>`;
+    }).join('');
+  } catch(e) { section && (section.style.display = 'none'); }
+}
+loadHomeBlog();
 </script>
 
 <script src="clientes.js"></script>
